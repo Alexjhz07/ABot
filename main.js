@@ -9,6 +9,9 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 const TOKEN = process.env.TOKEN;
 const OWNER = process.env.OWNER;
+const BOTCHNL = process.env.BOTCHNL;
+
+const generateImage = require("./utility/generateImage");
 
 for(const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -59,13 +62,21 @@ client.on('messageCreate', message => {
             break;
         }
         case 'reactionrole': {
-            client.commands.get('reactionrole').execute(message, args, Discord, client);
+            client.commands.get('reactionrole').execute(message, args, Discord, client, BOTCHNL);
             break;
         }
         default: {
             message.channel.send(`Error, ${command} is not a valid command`);
         }
     }
+});
+
+client.on("guildMemberAdd", async (member) => {
+    const img = await generateImage(member);
+    member.guild.channels.cache.get(BOTCHNL).send({
+        content: `<@${member.id}> Welcome to the server`,
+        files: [img]
+    });
 });
 
 // Must be last line V
