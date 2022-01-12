@@ -27,9 +27,9 @@ client.on('messageCreate', message => {
 
     let isBotOwner = message.author.id == OWNER;
 
-    const args = message.content.slice(PREFIX.length).split(/ +/);
+    const args = message.content.slice(PREFIX.length).trim().split(/ +/);
     const command = args.shift().toLowerCase();
-
+    
     switch(command){
         case 'ping': {
             client.commands.get('ping').execute(message, args);
@@ -37,7 +37,7 @@ client.on('messageCreate', message => {
         }
         case 'shutdown': {
             if(!isBotOwner) {
-                message.channel.send("Insufficient permission");
+                message.channel.send("Error: Insufficient permission");
                 return;
             } else {
                 client.commands.get('shutdown').execute(message, args, client);
@@ -46,7 +46,7 @@ client.on('messageCreate', message => {
         }
         case 'restart': {
             if(!isBotOwner) {
-                message.channel.send("Insufficient permission");
+                message.channel.send("Error: Insufficient permission");
                 return;
             } else {
                 client.commands.get('restart').execute(message, args, client, TOKEN);
@@ -66,7 +66,7 @@ client.on('messageCreate', message => {
             break;
         }
         default: {
-            message.channel.send(`Error, ${command} is not a valid command`);
+            message.channel.send(`Error: ${command} is not a valid command`);
         }
     }
 });
