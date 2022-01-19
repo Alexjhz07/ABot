@@ -40,25 +40,19 @@ module.exports = {
             }
         )
 
-        const senderAcc = await profileModel.findOne(
-            {
-                userID: message.author.id
-            }
-        )
-
-        if(!senderAcc) {
-            return message.channel.send(`Error: Cannot find account for ${receiver.user.username}`)
+        if(!profileData) {
+            return message.channel.send('Error: Cannot locate your account. Please try again');
         }
 
-        if(0 > senderAcc.coins - amount) {
-            return message.channel.send(`Error: You do not have enough coins to send ${args[1]} coins to ${receiver.user.username}`);
+        if(0 > profileData.coins - amount) {
+            return message.channel.send(`Error: You do not have enough to send ${args[1]} coins to ${receiver.user.username}`);
         }
 
         try {
             receiverAcc.coins += amount;
             receiverAcc.save();
-            senderAcc.coins -= amount;
-            senderAcc.save();
+            profileData.coins -= amount;
+            profileData.save();
         } catch(err) {
             console.log(err);
             return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`)
