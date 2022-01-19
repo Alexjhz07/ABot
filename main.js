@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
-const fs = require('fs')
+const fs = require('fs');
 const mongoose = require('mongoose');
 require('dotenv').config();
-
-const TOKEN = process.env.TOKEN;
-const MONGODBSRV = process.env.MONGODBSRV;
 
 const client = new Discord.Client({
     intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", 
@@ -18,7 +15,7 @@ client.events = new Discord.Collection();
     require(`./handlers/${handler}`)(client, Discord);
 })
 
-mongoose.connect(MONGODBSRV, {
+mongoose.connect(process.env.MONGODBSRV, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
@@ -28,4 +25,4 @@ mongoose.connect(MONGODBSRV, {
 });
 
 // Must be last line V
-client.login(TOKEN);
+client.login(process.env.TOKEN);

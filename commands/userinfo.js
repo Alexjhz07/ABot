@@ -1,8 +1,10 @@
 module.exports = {
     name: 'userinfo',
-    aliases: [],
+    aliases: ['user', 'u'],
+    permissions: ["ADMINISTRATOR"],
+    cooldown: 5,
     description: 'Fetch the information of a single user',
-    execute: (client, message, args, Discord, isBotOwner, profileData) => {
+    execute: (client, message, args, Discord, profileData) => {
         // Usage: *whois <@user>, *whois user_id
 
         if(!args.length) {
@@ -14,11 +16,11 @@ module.exports = {
 
         // Replace mentions to IDs
         // A mention is formatted like this: <@user_id> or <@!user_id>
-        for(i in args) {
-            let userID = args[i].includes('<@!') ? args[i].replace('<@!', '').replace('>', '') : args[i].includes('<@') ? args[i].replace('<@', '').replace('<', '') : '';
+        for(const arg of args) {
+            let userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('<', '') : '';
 
             if (userID == '') {
-                msg += `Error: ${args[i]} is an invalid ID.\n\n`;
+                msg += `Error: ${arg} is an invalid ID.\n\n`;
                 continue;
             }
 

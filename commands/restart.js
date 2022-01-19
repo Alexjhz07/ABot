@@ -3,10 +3,13 @@ const TOKEN = process.env.TOKEN;
 
 module.exports = {
     name: 'restart',
+    aliases: [],
+    permissions: [],
+    cooldown: 1,
     description: "Restarts Bot",
-    execute(client, message, args, Discord, isBotOwner) {
-        if(!isBotOwner) {
-            message.channel.send("Error: Insufficient permission");
+    execute(client, message, args, Discord, profileData) {
+        if(message.author.id != process.env.OWNER) {
+            message.channel.send("Error: This command requires owner status");
             return;
         } else {
             message.channel.send('Restarting...').then(m => {

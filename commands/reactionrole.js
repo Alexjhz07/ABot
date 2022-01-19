@@ -1,5 +1,8 @@
 module.exports = {
     name: 'reactionrole',
+    aliases: [],
+    permissions: ["ADMINISTRATOR"],
+    cooldown: 5,
     description: "Sets up a simple reaction role message",
     async execute(client, message, args, Discord, isBotOwner) {
         const channel = message.channel.id;

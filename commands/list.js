@@ -1,7 +1,10 @@
 module.exports = {
     name: 'list',
+    aliases: [],
+    permissions: [],
+    cooldown: 5,
     description: 'Outputs data requested by user',
-    execute(client, message, args, Discord, isBotOwner) {
+    execute(client, message, args, Discord, profileData) {
         if(!args.length) {
             message.channel.send('Error: Argument cannot be empty');
         } else {

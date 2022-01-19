@@ -2,10 +2,11 @@ const profileModel = require('../models/profileSchema');
 
 module.exports = {
     name: 'stonks',
-    aliases: [],
+    aliases: ['s', 'st'],
     permissions: [],
+    cooldown: 300,
     description: 'Gives the user a random amount of coins',
-    async execute(client, message, args, Discord, isBotOwner, profileData) {
+    async execute(client, message, args, Discord, profileData) {
         const randomNumber = Math.floor(Math.random() * 50) + 1; //[1, 50]
         const response = await profileModel.findOneAndUpdate(
             {
