@@ -26,7 +26,7 @@ module.exports = {
             return message.channel.send(`Error: ${args[1]} is not a positive integer`);
         }
 
-        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
+        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[1] % 1 != 0) {
             return message.channel.send(`Error: ${args[1]} is out of bounds`);
         }
 
@@ -40,12 +40,16 @@ module.exports = {
             }
         )
 
+        if(!receiverAcc) {
+            return message.channel.send(`Error: Cannot locate account for ${receiver.user.username}. Please try again`);
+        }
+
         if(!profileData) {
             return message.channel.send('Error: Cannot locate your account. Please try again');
         }
 
         if(0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have enough to send ${args[1]} coins to ${receiver.user.username}`);
+            return message.channel.send(`Error: You do not have enough to send ${amount} coins to ${receiver.user.username}`);
         }
 
         try {
@@ -58,6 +62,6 @@ module.exports = {
             return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`)
         }
 
-        return message.channel.send(`Successfully transferred ${args[1]} coins from ${message.author.username} to ${receiver.user.username}`);
+        return message.channel.send(`Successfully transferred ${amount} coins from ${message.author.username} to ${receiver.user.username}`);
     }
 }

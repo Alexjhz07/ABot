@@ -64,14 +64,15 @@ module.exports = async (client, Discord, message) => {
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); 
 
     if(!command) {
-        return message.channel.send(`Error: ${cmd} is not a valid command`);
+        return message.channel.send(`Error: "${cmd}" is not a valid command`);
     }
 
     if(command.permissions.length) {
         let invalidPerms = [];
         for(const perm of command.permissions) {
             if(!validPermissions.includes(perm)) {
-                return console.log(`Invalid permission ${perm} deteched while attempting command ${cmd} from user ${message.author.username}`)
+                message.channel.send(`Error: An invalid permission "${perm}" was located while attempting this command.\nPlease notify the my owner about this bug.`);
+                return console.log(`Invalid permission "${perm}" detected while attempting command "${cmd}" from user ${message.author.username}`);
             }
             if(!message.member.permissions.has(perm)) {
                 invalidPerms.push(perm);
@@ -108,7 +109,7 @@ module.exports = async (client, Discord, message) => {
                 unit = 'second'
             }
 
-            return message.channel.send(`Cooldown: Please wait ${timeLeft} more ${unit} before using the ${cmd} command again.`)
+            return message.channel.send(`Cooldown: Please wait ${timeLeft} more ${unit} before using the "${cmd}" command again.`)
         }
     }
 
