@@ -16,7 +16,7 @@ module.exports = {
         let amount;
 
         if(!receiver) {
-            return message.channel.send(`Error: Receiver ${userID} not found`)
+            return message.channel.send(`Error: Receiver ${userID} not found`);
         }
         
         try {
@@ -59,7 +59,7 @@ module.exports = {
             profileData.save();
         } catch(err) {
             console.log(err);
-            return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`)
+            return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`);
         }
 
         return message.channel.send(`Successfully transferred ${amount} coins from ${message.author.username} to ${receiver.user.username}`);

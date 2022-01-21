@@ -80,7 +80,7 @@ module.exports = async (client, Discord, message) => {
             }
         }
         if(invalidPerms.length) {
-            return message.channel.send(`Error: Missing permissions ${invalidPerms}`)
+            return message.channel.send(`Error: Missing permissions ${invalidPerms}`);
         }
     }
 
@@ -106,10 +106,10 @@ module.exports = async (client, Discord, message) => {
                 timeLeft = 1;
                 unit = 'minute';
             } else if(timeLeft == 1) {
-                unit = 'second'
+                unit = 'second';
             }
 
-            return message.channel.send(`Cooldown: Please wait ${timeLeft} more ${unit} before using the "${cmd}" command again.`)
+            return message.channel.send(`Cooldown: Please wait ${timeLeft} more ${unit} before using the "${cmd}" command again.`);
         }
     }
 

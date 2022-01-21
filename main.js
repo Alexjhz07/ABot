@@ -13,7 +13,7 @@ client.events = new Discord.Collection();
 
 ['commandHandler', 'eventHandler'].forEach(handler => {
     require(`./handlers/${handler}`)(client, Discord);
-})
+});
 
 mongoose.connect(process.env.MONGODBSRV, {
     useNewUrlParser: true,

@@ -13,7 +13,7 @@ module.exports = {
             return;
         } else {
             message.channel.send('Restarting...').then(m => {
-                client.destroy()
+                client.destroy();
                 client.login(TOKEN);
                 message.channel.send('Restart Success');
             }); 

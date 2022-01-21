@@ -25,12 +25,12 @@ module.exports = {
             }
 
             // Check the 'Promises' part to learn about .then() and .catch()!
-            let member = message.guild.members.cache.get(userID)
+            let member = message.guild.members.cache.get(userID);
             
             if(!member) {
                 msg += `Error: Could not find a member ${userID}\n\n`;
             } else {
-                msg += `Member found: ${member.user.tag}.\nJoined: ${member.joinedAt}.\n\n`
+                msg += `Member found: ${member.user.tag}.\nNickname: ${(member.displayName == member.user.username) ? 'None' : member.displayName}.\nAccount Age: ${((Date.now() - member.user.createdAt) / (1000 * 60 * 60 * 24)).toFixed(2)} days old.\nJoined Server: ${member.joinedAt}.\n\n`;
             }
         }
 
