@@ -4,10 +4,10 @@ module.exports = {
     name: 'donate',
     aliases: [],
     permissions: [],
-    cooldown: 0,
+    cooldown: 5,
     description: "Donate some money to another player",
     async execute(client, message, args, Discord, profileData) {
-        if(!args.length || args.length != 2) {
+        if(args.length != 2) {
             return message.channel.send(`Error: Donate only accepts two arguments`);
         }
 
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         if(message.author == receiver.user) {
-            return message.channel.send('Error: Cannot send money to oneself');
+            return message.channel.send('Error: Cannot send money to yourself');
         }
 
         const receiverAcc = await profileModel.findOne(

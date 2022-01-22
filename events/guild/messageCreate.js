@@ -50,7 +50,7 @@ module.exports = async (client, Discord, message) => {
             let profile = await profileModel.create({
                 userID: message.author.id,
                 serverID: message.guild.id,
-                coins: 1000,
+                coins: 0,
                 bank: 0
             });
             profile.save();
@@ -71,7 +71,7 @@ module.exports = async (client, Discord, message) => {
         let invalidPerms = [];
         for(const perm of command.permissions) {
             if(!validPermissions.includes(perm)) {
-                message.channel.send(`Error: An invalid permission "${perm}" was located while attempting this command.\nPlease notify the my owner about this bug.`);
+                message.channel.send(`Error: An invalid permission "${perm}" was located while attempting this command.\nPlease notify my owner about this bug.`);
                 return console.log(`Invalid permission "${perm}" detected while attempting command "${cmd}" from user ${message.author.username}`);
             }
             if(!message.member.permissions.has(perm)) {
@@ -80,7 +80,7 @@ module.exports = async (client, Discord, message) => {
             }
         }
         if(invalidPerms.length) {
-            return message.channel.send(`Error: Missing permissions ${invalidPerms}`);
+            return message.channel.send(`Error: Missing permission ${invalidPerms}`);
         }
     }
 
@@ -99,10 +99,10 @@ module.exports = async (client, Discord, message) => {
             let unit = 'seconds';
             let timeLeft = Math.ceil((expirationTime - currentTime) / 1000);
 
-            if(timeLeft > 60) {
+            if((timeLeft / 60).toFixed(1) > 1) {
                 timeLeft = (timeLeft / 60).toFixed(1);
                 unit = 'minutes';
-            } else if(timeLeft == 60) {
+            } else if((timeLeft / 60).toFixed(1) == 1) {
                 timeLeft = 1;
                 unit = 'minute';
             } else if(timeLeft == 1) {
@@ -115,6 +115,5 @@ module.exports = async (client, Discord, message) => {
 
     timeStamps.set(message.author.id, currentTime);
     setTimeout(() => timeStamps.delete(message.author.id), cooldown);
-    
     command.execute(client, message, args, Discord, profileData);
 }
