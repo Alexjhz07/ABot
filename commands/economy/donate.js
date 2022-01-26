@@ -54,8 +54,8 @@ module.exports = {
 
         try {
             receiverAcc.coins += amount;
-            receiverAcc.save();
             profileData.coins -= amount;
+            receiverAcc.save();
             profileData.save();
         } catch(err) {
             console.log(err);

@@ -21,7 +21,7 @@ module.exports = {
         
         if (randomNumber < 15) {
             return message.channel.send(`${message.author.username} just received ${randomNumber}.\nTheir balance is now ${response.coins + randomNumber}.`);
-        } else if (randomNumber > 35) {
+        } else if (randomNumber < 35) {
             return message.channel.send(`Not a bad day for stonks!\n${message.author.username} just received ${randomNumber}.\nTheir balance is now ${response.coins + randomNumber}.`);
         } else {
             return message.channel.send(`Big stonks!\n${message.author.username} just received ${randomNumber}.\nTheir balance is now ${response.coins + randomNumber}.`);

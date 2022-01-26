@@ -26,7 +26,7 @@ module.exports = {
 
             // Check the 'Promises' part to learn about .then() and .catch()!
             let member = message.guild.members.cache.get(userID);
-            
+
             if(!member) {
                 msg += `Error: Could not find a member ${userID}\n\n`;
             } else {
