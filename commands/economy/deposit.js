@@ -14,7 +14,12 @@ module.exports = {
         let amount;
 
         try {
-            amount = parseInt(args[0]);
+            if (amount.toUpperCase() == "ALL"){
+                amount = profileData.coins;
+            }
+            else{
+                amount = parseInt(args[0]);
+            }
         } catch(err) {
             console.log(err);
             return message.channel.send(`Error: ${args[0]} is not a positive integer`);
