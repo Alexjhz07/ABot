@@ -19,14 +19,13 @@ module.exports = {
             return message.channel.send(`Error: Receiver ${userID} not found`);
         }
         
-        try {
+        if (args[1].toUpperCase() == "ALL") {
+            amount = profileData.coins;
+        } else if (Number(args[1])) {
             amount = parseInt(args[1]);
-        } catch(err) {
-            console.log(err);
-            return message.channel.send(`Error: ${args[1]} is not a positive integer`);
-        }
+        } 
 
-        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[1] % 1 != 0) {
+        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
             return message.channel.send(`Error: ${args[1]} is out of bounds`);
         }
 

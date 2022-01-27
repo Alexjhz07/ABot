@@ -13,14 +13,13 @@ module.exports = {
 
         let amount;
 
-        try {
+        if (args[0].toUpperCase() == "ALL") {
+            amount = profileData.coins;
+        } else if (Number(args[0])) {
             amount = parseInt(args[0]);
-        } catch(err) {
-            console.log(err);
-            return message.channel.send(`Error: ${args[0]} is not a positive integer`);
-        }
+        } 
 
-        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[0] % 1 != 0) {
+        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
