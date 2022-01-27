@@ -14,7 +14,10 @@ module.exports = {
         let amount;
 
         if (args[0].toUpperCase() == "ALL") {
-            amount = profileData.coins;
+            if(profileData.bank == 0) {
+                return message.channel.send('Error: You have no money to withdraw');
+            }
+            amount = profileData.bank;
         } else if (Number(args[0])) {
             amount = parseInt(args[0]);
         } 

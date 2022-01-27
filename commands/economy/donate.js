@@ -20,6 +20,9 @@ module.exports = {
         }
         
         if (args[1].toUpperCase() == "ALL") {
+            if(profileData.coins == 0) {
+                return message.channel.send('Error: You have no money to donate');
+            }
             amount = profileData.coins;
         } else if (Number(args[1])) {
             amount = parseInt(args[1]);

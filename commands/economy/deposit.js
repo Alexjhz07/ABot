@@ -18,6 +18,9 @@ module.exports = {
         let amount;
 
         if (args[0].toUpperCase() == "ALL") {
+            if(profileData.coins == 0) {
+                return message.channel.send('Error: You have no money to deposit');
+            }
             amount = profileData.coins;
         } else if (Number(args[0])) {
             amount = parseInt(args[0]);
