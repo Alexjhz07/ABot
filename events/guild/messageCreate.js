@@ -55,7 +55,18 @@ module.exports = async (client, Discord, message) => {
                 userID: message.author.id,
                 serverID: message.guild.id,
                 coins: 0,
-                bank: 0
+                bank: 0,
+                stats: {
+                    exp: 0,
+                    stonksUsed: 0,
+                    stonksReceived: 0,
+                    flipsWon: 0,
+                    flipsLost: 0,
+                    pokeSucceed: 0,
+                    pokeFail: 0,
+                    beenPoked: 0,
+                    worfAsked: 0
+                }
             });
             profile.save();
         }

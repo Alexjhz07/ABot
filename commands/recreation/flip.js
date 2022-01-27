@@ -46,6 +46,7 @@ module.exports = {
         if(rng.charAt(0) == bet.charAt(0)) {
             try {
                 profileData.coins += amount;
+                profileData.stats.flipsWon++;
                 profileData.save();
             } catch(err) {
                 console.log(err);
@@ -55,6 +56,7 @@ module.exports = {
         } else {
             try {
                 profileData.coins -= amount;
+                profileData.stats.flipsLost++;
                 profileData.save();
             } catch(err) {
                 console.log(err);

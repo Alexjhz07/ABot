@@ -17,8 +17,19 @@ module.exports = async (client, Discord, member) => {
             let profile = await profileModel.create({
                 userID: member.id,
                 serverID: member.guild.id,
-                coins: 1000,
-                bank: 0
+                coins: 0,
+                bank: 0,
+                stats: {
+                    exp: 0,
+                    stonksUsed: 0,
+                    stonksReceived: 0,
+                    flipsWon: 0,
+                    flipsLost: 0,
+                    pokeSucceed: 0,
+                    pokeFail: 0,
+                    beenPoked: 0,
+                    worfAsked: 0
+                }
             });
             profile.save();
         }

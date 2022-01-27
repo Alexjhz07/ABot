@@ -3,19 +3,15 @@ module.exports = {
     aliases: ['user', 'u'],
     permissions: ["ADMINISTRATOR"],
     cooldown: 5,
-    description: 'Fetch the information of a single user',
+    description: 'Fetch the Discord information of listed users',
     execute: (client, message, args, Discord, profileData) => {
-        // Usage: *whois <@user>, *whois user_id
 
         if(!args.length) {
-            message.channel.send('Error: Argument cannot be empty.');
-            return;
+            return message.channel.send('Error: Argument cannot be empty.');
         }
 
         let msg = '';
 
-        // Replace mentions to IDs
-        // A mention is formatted like this: <@user_id> or <@!user_id>
         for(const arg of args) {
             let userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('<', '') : '';
 
@@ -24,7 +20,6 @@ module.exports = {
                 continue;
             }
 
-            // Check the 'Promises' part to learn about .then() and .catch()!
             let member = message.guild.members.cache.get(userID);
 
             if(!member) {
