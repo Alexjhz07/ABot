@@ -2,10 +2,10 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'donate',
-    aliases: ['give'],
+    aliases: ['give', 'feed'],
     permissions: [],
     cooldown: 5,
-    description: "Donate some money to another player",
+    description: "Donate some peanuts to another player",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 2) {
             return message.channel.send(`Error: Donate only accepts two arguments`);
@@ -21,7 +21,7 @@ module.exports = {
         
         if (args[1].toUpperCase() == "ALL") {
             if(profileData.coins == 0) {
-                return message.channel.send('Error: You have no money to donate');
+                return message.channel.send('Error: You have no peanuts to donate');
             }
             amount = profileData.coins;
         } else if (Number(args[1])) {
@@ -33,7 +33,7 @@ module.exports = {
         }
 
         if(message.author == receiver.user) {
-            return message.channel.send('Error: Cannot send money to yourself');
+            return message.channel.send('Error: Cannot send peanuts to yourself');
         }
 
         const receiverAcc = await profileModel.findOne(
@@ -51,7 +51,7 @@ module.exports = {
         }
 
         if(0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have enough to send ${amount} coins to ${receiver.user.username}`);
+            return message.channel.send(`Error: You do not have enough to send ${amount} peanuts to ${receiver.user.username}`);
         }
 
         try {
@@ -64,6 +64,6 @@ module.exports = {
             return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`);
         }
 
-        return message.channel.send(`Successfully transferred ${amount} coins from ${message.author.username} to ${receiver.user.username}`);
+        return message.channel.send(`Successfully transferred ${amount} peanuts from ${message.author.username} to ${receiver.user.username}`);
     }
 }

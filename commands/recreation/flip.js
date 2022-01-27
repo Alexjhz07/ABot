@@ -3,10 +3,10 @@ module.exports = {
     aliases: ['bet'],
     permissions: [],
     cooldown: 5,
-    description: "Flip a coin for double or nothing!",
+    description: "Flip a coin for double the peanuts or nothing!",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 2) {
-            return message.channel.send(`Error: You must bet some money and predict the result to do the flip!`);
+            return message.channel.send(`Error: You must bet some peanuts and predict the result to do the flip!`);
         }
 
         let amount = args[0];
@@ -27,7 +27,7 @@ module.exports = {
         }
 
         if(0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have ${amount} coins to bet!`);
+            return message.channel.send(`Error: You do not have ${amount} peanuts to bet!`);
         }
 
         let bet = args[1].toLowerCase();
@@ -51,7 +51,7 @@ module.exports = {
                 console.log(err);
                 return message.channel.send(`Error: Could not complete the coin toss`);
             }
-            return message.channel.send(`Success! You bet ${bet} and the coin landed ${rng} up.\nYou just gained ${amount} coins, your wallet now contains ${profileData.coins} coins.`);
+            return message.channel.send(`Success! You bet ${bet} and the coin landed ${rng} up.\nYou just gained ${amount} peanuts, your pockets now contain ${profileData.coins} peanuts.`);
         } else {
             try {
                 profileData.coins -= amount;
@@ -60,7 +60,7 @@ module.exports = {
                 console.log(err);
                 return message.channel.send(`Error: Could not complete the coin toss`);
             }
-            return message.channel.send(`Bad luck... You bet ${bet} and the coin landed ${rng} up.\nYou just lost ${amount} coins, your wallet now contains ${profileData.coins} coins.`);
+            return message.channel.send(`Bad luck... You bet ${bet} and the coin landed ${rng} up.\nYou just lost ${amount} peanuts, your pockets now contain ${profileData.coins} peanuts.`);
         }
     }
 }

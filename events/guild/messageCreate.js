@@ -41,6 +41,10 @@ const validPermissions = [
 module.exports = async (client, Discord, message) => {
     if(!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
 
+    if(message.content.startsWith(";") && message.content.endsWith(";") || 
+    message.content.startsWith(";") && message.content.endsWith(")") ||
+    message.content.startsWith(";") && message.content.endsWith("(")) return;
+
     let profileData;
 
     try {

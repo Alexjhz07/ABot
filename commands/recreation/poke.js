@@ -50,7 +50,7 @@ module.exports = {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred during this interaction from ${message.author.username} to ${receiver.user.username}`);
                 }
-                return message.channel.send(`||${receiver.user.username} lets down their guard...\nYou successfully sneak away with ${amount} coins at their expense!||`);
+                return message.channel.send(`||${receiver.user.username} lets down their guard...\nYou successfully sneak away with ${amount} peanuts at their expense!||`);
             } else {
                 try {
                     receiverAcc.coins += amount;
@@ -61,7 +61,7 @@ module.exports = {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred during this interaction from ${message.author.username} to ${receiver.user.username}`);
                 }
-                return message.channel.send(`||You approach ${receiver.user.username} to poke them, but you both get hit by some coins!\n${amount} coins were found beside each of you after the strange incident.||`);
+                return message.channel.send(`||You approach ${receiver.user.username} to poke them, but you both get hit by some peanuts falling from the sky!\n${amount} peanuts were found beside each of you after the strange incident.||`);
             }
         } else if(rng <= 20) {
             if(profileData.coins - amount >= 0) {
@@ -73,7 +73,7 @@ module.exports = {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
                 }
-                return message.channel.send(`||As you're approaching ${receiver.user.username}, you feel something move in your pockets.\n${amount} coins have are missing... A bank deposit receipt sits in its place.||`);
+                return message.channel.send(`||As you're approaching ${receiver.user.username}, you feel something move in your pockets.\n${amount} peanuts have gone missing... A bank deposit receipt sits in its place.||`);
             } else {
                 try {
                     profileData.coins += amount;
@@ -82,7 +82,7 @@ module.exports = {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
                 }
-                return message.channel.send(`||Some shimmering objects fall from the sky as you approach ${receiver.user.username}.\nYou manage to evade ${amount} coins and pick them up after.\nWhat a weird event!||`);
+                return message.channel.send(`||Some shimmering objects fall from the sky as you approach ${receiver.user.username}.\nYou manage to evade ${amount} peanuts and pick them up after.\nWhat a weird event!||`);
             }
         } else if(rng <= 30) {
             if(profileData.coins - amount >= 0) {
@@ -93,7 +93,7 @@ module.exports = {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
                 }
-                return message.channel.send(`||Right as you're about to poke ${receiver.user.username}, a metallic sound rings out behind you.\nA hole in your pocket has allowed ${amount} coins to drop out!\nPerhaps Karma exists after all...||`);
+                return message.channel.send(`||Right as you're about to poke ${receiver.user.username}, a metallic sound rings out behind you.\nA hole in your pocket has allowed ${amount} peanuts to drop out!\nPerhaps Karma exists after all...||`);
             } else {
                 return message.channel.send(`||The Poke Police make their way around a corner just as you close in on ${receiver.user.username}.\nYou manage to evade detection but boy was that close...\nToday doesn't seem like a very safe day for poking.||`);
             }
@@ -102,7 +102,7 @@ module.exports = {
         } else if(rng <= 50) {
             return message.channel.send(`||${receiver.user.username} does not notice as you sneak behind them and give them a little love tap on the shoulder.\nSeems like all that training has paid off!||`);
         } else if(rng <= 60) {
-            return message.channel.send(`||Blending into a nearby crowd, you successfully poke ${receiver.user.username} on their shoulder as you pass by.\nThe look of confusion on their face as they search for the culprit is everything you were looking for.||`);
+            return message.channel.send(`||Blending into a nearby crowd, you successfully poke ${receiver.user.username} on their shoulder as you pass by.\nThe look of confusion on their face as they searched for the culprit is everything you were looking for.||`);
         } else if(rng <= 70) {
             return message.channel.send(`||Years of training has led up to this moment.\nYou're weaving between people, hiding in the shadows.\nUnfortunately, ${receiver.user.username} notices you are you're forced to interact with them like a normal person.||`);
         } else if(rng <= 80) {

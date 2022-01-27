@@ -5,7 +5,7 @@ module.exports = {
     aliases: ['rob'],
     permissions: [],
     cooldown: 5,
-    description: "Withdraw some money from the bank",
+    description: "Withdraw some peanuts from the peanut bank",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {
             return message.channel.send(`Error: Withdraw only accepts one argument`);
@@ -15,7 +15,7 @@ module.exports = {
 
         if (args[0].toUpperCase() == "ALL") {
             if(profileData.bank == 0) {
-                return message.channel.send('Error: You have no money to withdraw');
+                return message.channel.send('Error: You have no peanuts to withdraw');
             }
             amount = profileData.bank;
         } else if (Number(args[0])) {
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         if(0 > profileData.bank - amount) {
-            return message.channel.send(`Error: You do not have enough in the bank to withdraw ${amount} coins`);
+            return message.channel.send(`Error: You do not have enough in the bank to withdraw ${amount} peanuts`);
         }
 
         try {
@@ -43,6 +43,6 @@ module.exports = {
             return message.channel.send(`Error: Could not complete the withdraw`);
         }
 
-        return message.channel.send(`Successfully withdrew ${amount} coins from your account.\nCurrent wallet: ${profileData.coins}\nCurrent bank: ${profileData.bank}`);
+        return message.channel.send(`Successfully withdrew ${amount} peanuts from your account.\nCurrent wallet: ${profileData.coins} peanuts\nCurrent bank: ${profileData.bank} peanuts`);
     }
 }

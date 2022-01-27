@@ -2,10 +2,10 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'deposit',
-    aliases: [],
+    aliases: ['stash'],
     permissions: [],
     cooldown: 5,
-    description: "Deposit some money into the bank",
+    description: "Stash away some peanuts into the peanut bank for the future generation",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {
             return message.channel.send(`Error: Deposit only accepts one argument`);
@@ -31,7 +31,7 @@ module.exports = {
         }
 
         if(0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have enough to deposit ${amount} coins into your bank`);
+            return message.channel.send(`Error: You do not have enough to deposit ${amount} peanuts into your stash`);
         }
 
         try {
@@ -43,6 +43,6 @@ module.exports = {
             return message.channel.send(`Error: Could not complete the deposit`);
         }
 
-        return message.channel.send(`Successfully deposited ${amount} coins into your account.\nCurrent wallet: ${profileData.coins}\nCurrent bank: ${profileData.bank}`);
+        return message.channel.send(`Successfully deposited ${amount} peanuts into your peanut reserves.\nCurrent pocket pile: ${profileData.coins} peanuts\nCurrent bank: ${profileData.bank} peanuts`);
     }
 }
