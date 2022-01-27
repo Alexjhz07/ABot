@@ -2,7 +2,7 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'withdraw',
-    aliases: [],
+    aliases: ['rob'],
     permissions: [],
     cooldown: 5,
     description: "Withdraw some money from the bank",

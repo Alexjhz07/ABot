@@ -2,7 +2,7 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'donate',
-    aliases: [],
+    aliases: ['give'],
     permissions: [],
     cooldown: 5,
     description: "Donate some money to another player",
