@@ -13,7 +13,7 @@ module.exports = {
 
         const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
-        
+
         if(!receiver) {
             return message.channel.send(`||You must poke someone on the server||`);
         }
@@ -100,6 +100,13 @@ module.exports = {
                 }
                 message.channel.send(`||Right as you're about to poke ${receiver.user.username}, a metallic sound rings out behind you.\nA hole in your pocket has allowed ${amount} peanuts to drop out!\nPerhaps Karma exists after all...||`);
             } else {
+                try {
+                    profileData.stats.pokeFail++;
+                    profileData.save();
+                } catch(err) {
+                    console.log(err);
+                    return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
+                }
                 message.channel.send(`||The Poke Police make their way around a corner just as you close in on ${receiver.user.username}.\nYou manage to evade detection but boy was that close...\nToday doesn't seem like a very safe day for poking.||`);
             }
         } else if(rng <= 40) {

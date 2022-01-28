@@ -2,7 +2,7 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'balance',
-    aliases: ['bal', 'bl', 'b'],
+    aliases: ['bal', 'bank', 'b'],
     permissions: [],
     cooldown: 5,
     description: 'Returns the user balance',
