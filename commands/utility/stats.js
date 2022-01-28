@@ -25,7 +25,7 @@ module.exports = {
         let msg = '';
 
         for(const arg of args) {
-            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('<', '') : '';
+            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
 
             if (userID == '') {
                 msg += `Error: ${arg} is an invalid ID.\n\n`;

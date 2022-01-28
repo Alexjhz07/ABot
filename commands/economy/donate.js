@@ -11,7 +11,7 @@ module.exports = {
             return message.channel.send(`Error: Donate only accepts two arguments`);
         }
 
-        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('<', '') : '';
+        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
         let amount;
 

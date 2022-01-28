@@ -11,9 +11,9 @@ module.exports = {
             return message.channel.send(`||Poke must have one target!||`);
         }
 
-        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('<', '') : '';
+        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
-
+        
         if(!receiver) {
             return message.channel.send(`||You must poke someone on the server||`);
         }
