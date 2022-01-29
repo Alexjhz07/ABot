@@ -48,7 +48,7 @@ module.exports = async (client, Discord, message) => {
         profileData = await profileModel.findOne({ userID: message.author.id })
 
         if(!profileData) {
-            let profile = await profileModel.create({
+            profileData = await profileModel.create({
                 userID: message.author.id,
                 serverID: message.guild.id,
                 coins: 0,
@@ -72,7 +72,7 @@ module.exports = async (client, Discord, message) => {
         console.log(err);
     }
 
-    if(currentTime >= profileData.stats.expNext) {
+    if(currentTime >= profileData.stats.expNext || !profileData.stats.expNext) {
         try {
             xp = Math.floor(Math.random() * 50) + 1; //[1, 50]
             profileData.stats.exp += xp;
@@ -81,9 +81,8 @@ module.exports = async (client, Discord, message) => {
             await profileData.save();
         } catch(err) {
             return console.log(err);
-        }    
+        }
     }
-    
 
     if(!message.content.startsWith(process.env.PREFIX)) return;
 
