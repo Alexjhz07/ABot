@@ -7,6 +7,7 @@ const profileSchema = new mongoose.Schema({
     bank: { type: Number, default: 0 },
     stats: {
         exp: { type: Number, default: 0 },
+        expNext: { type: Number, default: 0 },
         stonksUsed: { type: Number, default: 0 },
         stonksReceived: { type: Number, default: 0 },
         flipsWon: { type: Number, default: 0 },

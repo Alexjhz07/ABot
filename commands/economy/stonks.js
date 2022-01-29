@@ -5,7 +5,7 @@ module.exports = {
     name: 'stonks',
     aliases: ['s', 'beg'],
     permissions: [],
-    cooldown: 300,
+    cooldown: 180,
     description: 'Gives the user a random number of peanuts',
     async execute(client, message, args, Discord, profileData) {
         const randomNumber = Math.floor(Math.random() * 50) + 1; //[1, 50]

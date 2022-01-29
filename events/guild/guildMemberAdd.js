@@ -5,6 +5,7 @@ const BOTCHNL = process.env.BOTCHNL;
 
 module.exports = async (client, Discord, member) => {
     const img = await generateImage(member);
+    const currentTime = Date.now();
     member.guild.channels.cache.get(BOTCHNL).send({
         content: `<@${member.id}> Welcome to the server`,
         files: [img]
@@ -21,6 +22,7 @@ module.exports = async (client, Discord, member) => {
                 bank: 0,
                 stats: {
                     exp: 0,
+                    expNext: currentTime,
                     stonksUsed: 0,
                     stonksReceived: 0,
                     flipsWon: 0,

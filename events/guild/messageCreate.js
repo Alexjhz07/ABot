@@ -39,13 +39,10 @@ const validPermissions = [
 ]
 
 module.exports = async (client, Discord, message) => {
-    if(!message.content.startsWith(process.env.PREFIX) || message.author.bot) return;
-
-    if(message.content.startsWith(";") && message.content.endsWith(";") || 
-    message.content.startsWith(";") && message.content.endsWith(")") ||
-    message.content.startsWith(";") && message.content.endsWith("(")) return;
+    if(message.author.bot) return;
 
     let profileData;
+    const currentTime = Date.now();
 
     try {
         profileData = await profileModel.findOne({ userID: message.author.id })
@@ -58,6 +55,7 @@ module.exports = async (client, Discord, message) => {
                 bank: 0,
                 stats: {
                     exp: 0,
+                    expNext: currentTime,
                     stonksUsed: 0,
                     stonksReceived: 0,
                     flipsWon: 0,
@@ -68,11 +66,31 @@ module.exports = async (client, Discord, message) => {
                     worfAsked: 0
                 }
             });
-            profile.save();
+            await profileData.save();
         }
     } catch(err) {
         console.log(err);
     }
+
+    if(currentTime >= profileData.stats.expNext) {
+        try {
+            xp = Math.floor(Math.random() * 50) + 1; //[1, 50]
+            profileData.stats.exp += xp;
+            nextTime = Math.floor(Math.random() * process.env.TIMERRNG) + parseInt(process.env.TIMERMIN);
+            profileData.stats.expNext = currentTime + nextTime;
+            await profileData.save();
+        } catch(err) {
+            return console.log(err);
+        }    
+    }
+    
+
+    if(!message.content.startsWith(process.env.PREFIX)) return;
+
+    if(message.content.startsWith(";") && message.content.endsWith(";") ||
+    message.content.startsWith(";") && message.content.endsWith(")") ||
+    message.content.startsWith(";") && message.content.endsWith("(") ||
+    message.content.startsWith(";;")) return;
 
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
@@ -103,7 +121,6 @@ module.exports = async (client, Discord, message) => {
         cooldowns.set(command.name, new Discord.Collection());
     }
 
-    const currentTime = Date.now();
     const timeStamps = cooldowns.get(command.name);
     const cooldown = (command.cooldown) * 1000;
 

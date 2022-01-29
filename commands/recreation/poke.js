@@ -43,27 +43,27 @@ module.exports = {
             if(receiverAcc.coins - amount >= 0) {
                 try {
                     receiverAcc.coins -= amount;
+                    receiverAcc.stats.beenPoked++;
                     profileData.coins += amount;
                     profileData.stats.pokeSucceed++;
-                    receiverAcc.save();
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred during this interaction from ${message.author.username} to ${receiver.user.username}`);
                 }
-                message.channel.send(`||${receiver.user.username} lets down their guard...\nYou successfully sneak away with ${amount} peanuts at their expense!||`);
+                return message.channel.send(`||${receiver.user.username} lets down their guard...\nYou successfully sneak away with ${amount} peanuts at their expense!||`);
             } else {
                 try {
                     receiverAcc.coins += amount;
+                    receiverAcc.stats.beenPoked++;
                     profileData.coins += amount;
                     profileData.stats.pokeFail++;
-                    receiverAcc.save();
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred during this interaction from ${message.author.username} to ${receiver.user.username}`);
                 }
-                message.channel.send(`||You approach ${receiver.user.username} to poke them, but you both get hit by some peanuts falling from the sky!\n${amount} peanuts were found beside each of you after the strange incident.||`);
+                return message.channel.send(`||You approach ${receiver.user.username} to poke them, but you both get hit by some peanuts falling from the sky!\n${amount} peanuts were found beside each of you after the strange incident.||`);
             }
         } else if(rng <= 20) {
             if(profileData.coins - amount >= 0) {
@@ -71,7 +71,7 @@ module.exports = {
                     profileData.bank += amount;
                     profileData.coins -= amount;
                     profileData.stats.pokeFail++;
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -81,7 +81,7 @@ module.exports = {
                 try {
                     profileData.coins += amount;
                     profileData.stats.pokeFail++;
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -93,7 +93,7 @@ module.exports = {
                 try {
                     profileData.coins -= amount;
                     profileData.stats.pokeFail++;
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -102,7 +102,7 @@ module.exports = {
             } else {
                 try {
                     profileData.stats.pokeFail++;
-                    profileData.save();
+                    await profileData.save();
                 } catch(err) {
                     console.log(err);
                     return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -112,7 +112,7 @@ module.exports = {
         } else if(rng <= 40) {
             try {
                 profileData.stats.pokeSucceed++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -121,7 +121,7 @@ module.exports = {
         } else if(rng <= 50) {
             try {
                 profileData.stats.pokeSucceed++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -130,7 +130,7 @@ module.exports = {
         } else if(rng <= 60) {
             try {
                 profileData.stats.pokeSucceed++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -139,7 +139,7 @@ module.exports = {
         } else if(rng <= 70) {
             try {
                 profileData.stats.pokeFail++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -148,7 +148,7 @@ module.exports = {
         } else if(rng <= 80) {
             try {
                 profileData.stats.pokeFail++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -157,7 +157,7 @@ module.exports = {
         } else if(rng <= 90) {
             try {
                 profileData.stats.pokeSucceed++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -166,7 +166,7 @@ module.exports = {
         } else {
             try {
                 profileData.stats.pokeFail++;
-                profileData.save();
+                await profileData.save();
             } catch(err) {
                 console.log(err);
                 return message.channel.send(`Error: Something unexpected occurred while editing your database account`);
@@ -176,7 +176,7 @@ module.exports = {
 
         try {
             receiverAcc.stats.beenPoked++;
-            receiverAcc.save();
+            await receiverAcc.save();
         } catch(err) {
             console.log(err);
             return message.channel.send(`Error: Something unexpected occurred during this interaction from ${message.author.username} to ${receiver.user.username}`);

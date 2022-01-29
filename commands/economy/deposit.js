@@ -2,7 +2,7 @@ const profileModel = require('../../models/profileSchema');
 
 module.exports = {
     name: 'deposit',
-    aliases: ['stash'],
+    aliases: ['stash', 'dep'],
     permissions: [],
     cooldown: 5,
     description: "Stash away some peanuts into the peanut bank for the future generation",
