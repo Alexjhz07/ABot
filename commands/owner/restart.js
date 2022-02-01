@@ -1,5 +1,4 @@
 require('dotenv').config();
-const TOKEN = process.env.TOKEN;
 
 module.exports = {
     name: 'restart',
@@ -14,7 +13,7 @@ module.exports = {
         } else {
             message.channel.send('Restarting...').then(m => {
                 client.destroy();
-                client.login(TOKEN);
+                client.login(process.env.TOKEN);
                 message.channel.send('Restart Success');
             }); 
         }

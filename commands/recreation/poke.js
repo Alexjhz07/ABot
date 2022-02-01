@@ -114,7 +114,7 @@ module.exports = {
                 break;
             case 13:
                 updateStates(amount, -amount, true);
-                msg += `||${receiver.user.username} is making their way downtown, when you come out of nowhere and give them a solid poke!\nStartled, they flail around and ${amount} peanuts fall out the pockets onto the ground looking for you before running away.\nYou, being the kind person you are, pick the peanuts up afterwards... and keep them.||`;
+                msg += `||${receiver.user.username} is making their way downtown, when you come out of nowhere and give them a solid poke!\nStartled, they flail around and ${amount} peanuts fall out the pockets onto the ground before they run away.\nYou, being the kind person you are, pick the peanuts up afterwards... and keep them.||`;
                 break;
             case 14:
                 updateStates(amount, 0, true);
