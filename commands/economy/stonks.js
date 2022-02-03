@@ -1,6 +1,3 @@
-const profileModel = require('../../models/profileSchema');
-const stats = require('../utility/stats');
-
 module.exports = {
     name: 'stonks',
     aliases: ['s', 'beg'],
@@ -13,7 +10,7 @@ module.exports = {
         profileData.coins += randomNumber;
         profileData.stats.stonksUsed++;
         profileData.stats.stonksReceived += randomNumber;
-        profileData.save();
+        await profileData.save();
         
         if(randomNumber == 1) {
             return message.channel.send(`The stonks are not very high today...\n${message.author.username} just received ${randomNumber} peanut from the heavens.\nTheir pocket is now at ${profileData.coins} peanuts.`);

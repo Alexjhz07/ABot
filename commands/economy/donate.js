@@ -46,10 +46,6 @@ module.exports = {
             return message.channel.send(`Error: Cannot locate account for ${receiver.user.username}. Please try again`);
         }
 
-        if(!profileData) {
-            return message.channel.send('Error: Cannot locate your account. Please try again');
-        }
-
         if(0 > profileData.coins - amount) {
             return message.channel.send(`Error: You do not have enough to send ${amount} peanuts to ${receiver.user.username}`);
         }

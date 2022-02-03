@@ -1,5 +1,3 @@
-const profileModel = require('../../models/profileSchema');
-
 module.exports = {
     name: 'withdraw',
     aliases: ['rob'],
@@ -24,10 +22,6 @@ module.exports = {
 
         if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
-        }
-
-        if(!profileData) {
-            return message.channel.send('Error: Cannot locate your account. Please try again');
         }
 
         if(0 > profileData.bank - amount) {

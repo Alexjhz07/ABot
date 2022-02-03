@@ -1,5 +1,3 @@
-const profileModel = require('../../models/profileSchema');
-
 module.exports = {
     name: 'deposit',
     aliases: ['stash', 'dep'],
@@ -9,10 +7,6 @@ module.exports = {
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {
             return message.channel.send(`Error: Deposit only accepts one argument`);
-        }
-
-        if(!profileData) {
-            return message.channel.send('Error: Cannot locate your account. Please try again');
         }
 
         let amount;

@@ -23,6 +23,8 @@ module.exports = async (client, Discord, member) => {
                 stats: {
                     exp: 0,
                     expNext: currentTime,
+                    dailyNext: currentTime,
+                    monthlyNext: currentTime,
                     stonksUsed: 0,
                     stonksReceived: 0,
                     flipsWon: 0,
