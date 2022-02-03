@@ -9,12 +9,7 @@ module.exports = {
             message.channel.send('Error: Argument cannot be empty.');
             return;
         } else {
-            let msg = '';
-            args.forEach(element => {
-                msg += element;
-                msg += " ";
-            });
-            message.channel.send(msg);
+            message.channel.send(args.join(' '));
         }
     }
 }

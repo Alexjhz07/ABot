@@ -22,10 +22,6 @@ module.exports = {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
-        if(!profileData) {
-            return message.channel.send('Error: Cannot locate your account. Please try again');
-        }
-
         if(0 > profileData.coins - amount) {
             return message.channel.send(`Error: You do not have ${amount} peanuts to bet!`);
         }

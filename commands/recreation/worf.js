@@ -37,12 +37,7 @@ module.exports = {
         let rng = Math.floor(Math.random() * responses.length); //[0, 20]
 
         message.channel.send(responses[rng]);
-
-        if(!profileData) {
-            return;
-        } else {
-            profileData.stats.worfAsked++;
-            profileData.save();
-        }
+        profileData.stats.worfAsked++;
+        profileData.save();
     }
 }

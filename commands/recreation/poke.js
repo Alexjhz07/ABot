@@ -21,10 +21,6 @@ module.exports = {
         if(message.author == receiver.user) {
             return message.channel.send(`||Silly peanut, you can't poke yourself!||`);
         }
-
-        if(!profileData) {
-            return message.channel.send('Error: Cannot locate your account. Please try again');
-        }
         
         const receiverAcc = await profileModel.findOne(
             {

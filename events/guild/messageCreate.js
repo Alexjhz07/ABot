@@ -1,4 +1,3 @@
-const { set } = require('mongoose');
 const profileModel = require('../../models/profileSchema');
 require('dotenv').config();
 
