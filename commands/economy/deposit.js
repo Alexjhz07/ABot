@@ -2,7 +2,7 @@ module.exports = {
     name: 'deposit',
     aliases: ['stash', 'dep'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Stash away some peanuts into the peanut bank for the future generation",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {

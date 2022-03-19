@@ -2,7 +2,7 @@ module.exports = {
     name: 'flip',
     aliases: ['bet'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Flip a coin for double the peanuts or nothing!",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 2) {
@@ -43,6 +43,7 @@ module.exports = {
             try {
                 profileData.coins += amount;
                 profileData.stats.flipsWon++;
+                profileData.stats.flipsPeanutsWon += amount;
                 profileData.save();
             } catch(err) {
                 console.log(err);
@@ -53,6 +54,7 @@ module.exports = {
             try {
                 profileData.coins -= amount;
                 profileData.stats.flipsLost++;
+                profileData.stats.flipsPeanutsLost += amount;
                 profileData.save();
             } catch(err) {
                 console.log(err);

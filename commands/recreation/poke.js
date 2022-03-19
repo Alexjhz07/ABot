@@ -4,7 +4,7 @@ module.exports = {
     name: 'poke',
     aliases: [],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Interactive command with mysterious properties...",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {
@@ -32,8 +32,8 @@ module.exports = {
             return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
         }
         
-        let rng = Math.floor(Math.random() * 15); //[0, 12]
-        let amount = Math.floor(Math.random() * 9) + 2; //[2, 10]
+        let rng = Math.floor(Math.random() * 15); //[0, 14]
+        let amount = Math.floor(Math.random() * 14) + 2; //[2, 15]
 
         let msg = '';
 

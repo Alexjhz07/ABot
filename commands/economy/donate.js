@@ -4,14 +4,14 @@ module.exports = {
     name: 'donate',
     aliases: ['give', 'feed'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Donate some peanuts to another player",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 2) {
             return message.channel.send(`Error: Donate only accepts two arguments`);
         }
 
-        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
+        const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
         let amount;
 
@@ -19,17 +19,17 @@ module.exports = {
             return message.channel.send(`Error: Receiver ${userID} not found`);
         }
         
-        if (args[1].toUpperCase() == "ALL") {
+        if (args[0].toUpperCase() == "ALL") {
             if(profileData.coins == 0) {
                 return message.channel.send('Error: You have no peanuts to donate');
             }
             amount = profileData.coins;
-        } else if (Number(args[1])) {
-            amount = parseInt(args[1]);
+        } else if (Number(args[0])) {
+            amount = parseInt(args[0]);
         } 
 
         if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
-            return message.channel.send(`Error: ${args[1]} is out of bounds`);
+            return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
         if(message.author == receiver.user) {

@@ -5,7 +5,7 @@ module.exports = {
     name: 'daily',
     aliases: ['monthly'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: 'A periodic income for the user',
     async execute(client, message, args, Discord, profileData) {
         const currentTime = Date.now();

@@ -2,7 +2,7 @@ module.exports = {
     name: 'withdraw',
     aliases: ['rob'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Withdraw some peanuts from the peanut bank",
     async execute(client, message, args, Discord, profileData) {
         if(args.length != 1) {

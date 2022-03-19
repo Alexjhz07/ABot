@@ -4,7 +4,7 @@ module.exports = {
     name: 'worf',
     aliases: ['ask', 'woof'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Utilize Bond's predictive powers!",
     async execute(client, message, args, Discord, profileData) {
         if(!args.length) {

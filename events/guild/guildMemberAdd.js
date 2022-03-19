@@ -29,6 +29,8 @@ module.exports = async (client, Discord, member) => {
                     stonksReceived: 0,
                     flipsWon: 0,
                     flipsLost: 0,
+                    flipsPeanutsWon: 0,
+                    flipsPeanutsLost: 0,
                     pokeSucceed: 0,
                     pokeFail: 0,
                     beenPoked: 0,

@@ -32,7 +32,7 @@ module.exports = {
     name: 'help',
     aliases: ['h'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: "Help command, sends commands to user dm.",
     execute(client, message, args, Discord, profileData) {
         message.channel.send('Commands have been sent to your direct messages.');

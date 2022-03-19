@@ -14,6 +14,8 @@ const profileSchema = new mongoose.Schema({
         stonksReceived: { type: Number, default: 0 },
         flipsWon: { type: Number, default: 0 },
         flipsLost: { type: Number, default: 0 },
+        flipsPeanutsWon: { type: Number, default: 0 },
+        flipsPeanutsLost: { type: Number, default: 0 },
         pokeSucceed: { type: Number, default: 0 },
         pokeFail: { type: Number, default: 0 },
         beenPoked: { type: Number, default: 0 },

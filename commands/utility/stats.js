@@ -10,12 +10,14 @@ module.exports = {
         // Usage: *whois <@user>, *whois user_id
 
         if(!args.length) {
-            return message.channel.send(`**=====Stats for ${message.author.username}=====**\n
+            return message.channel.send(`**===== Stats for ${message.author.username} [Level ${Math.floor(profileData.stats.exp / process.env.XPPERLEVEL)}] =====**\n
             Experience: ${profileData.stats.exp}
             Peanuts requested: ${profileData.stats.stonksUsed} times
             Peanuts received from stonks: ${profileData.stats.stonksReceived} peanuts
             Coin flips won: ${profileData.stats.flipsWon}
             Coin flips lost: ${profileData.stats.flipsLost}
+            Peanuts won from flips: ${profileData.stats.flipsPeanutsWon}
+            Peanuts lost from flips: ${profileData.stats.flipsPeanutsLost}
             Pokes succeeded: ${profileData.stats.pokeSucceed}
             Pokes failed: ${profileData.stats.pokeFail}
             Been poked: ${profileData.stats.beenPoked} times
@@ -46,12 +48,14 @@ module.exports = {
                 msg += `Error: Could not find an account for ${member.user.username}\n\n`;
                 continue;
             } else {
-                msg += `**===Stats for ${member.user.username}===**\n
+                msg += `**=== Stats for ${member.user.username} [Level ${Math.floor(account.stats.exp / process.env.XPPERLEVEL)}] ===**\n
                 Experience: ${account.stats.exp}
                 Peanuts requested: ${account.stats.stonksUsed} times
                 Peanuts received from stonks: ${account.stats.stonksReceived} peanuts
                 Coin flips won: ${account.stats.flipsWon}
                 Coin flips lost: ${account.stats.flipsLost}
+                Peanuts won from flips: ${account.stats.flipsPeanutsWon}
+                Peanuts lost from flips: ${account.stats.flipsPeanutsLost}
                 Pokes succeeded: ${account.stats.pokeSucceed}
                 Pokes failed: ${account.stats.pokeFail}
                 Been poked: ${account.stats.beenPoked} times

@@ -4,7 +4,7 @@ module.exports = {
     name: 'balance',
     aliases: ['bal', 'bank', 'b'],
     permissions: [],
-    cooldown: 5,
+    cooldown: 0,
     description: 'Returns the user balance',
     async execute(client, message, args, Discord, profileData) {
         if(!args.length) {

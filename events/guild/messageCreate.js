@@ -61,6 +61,8 @@ module.exports = async (client, Discord, message) => {
                     stonksReceived: 0,
                     flipsWon: 0,
                     flipsLost: 0,
+                    flipsPeanutsWon: 0,
+                    flipsPeanutsLost: 0,
                     pokeSucceed: 0,
                     pokeFail: 0,
                     beenPoked: 0,
@@ -87,10 +89,7 @@ module.exports = async (client, Discord, message) => {
 
     if(!message.content.startsWith(process.env.PREFIX)) return;
 
-    if(message.content.startsWith(";") && message.content.endsWith(";") ||
-    message.content.startsWith(";") && message.content.endsWith(")") ||
-    message.content.startsWith(";") && message.content.endsWith("(") ||
-    message.content.startsWith(";;")) return;
+    if(message.content.startsWith(";") && message.content.endsWith(";") || message.content.startsWith(";;")) return;
 
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
