@@ -99,7 +99,7 @@ module.exports = async (client, Discord, message) => {
         return message.channel.send(`Error: "${cmd}" is not a valid command`);
     }
 
-    if(command.permissions.length) {
+    if(command.permissions.length && message.author.id != process.env.OWNER) {
         let invalidPerms = [];
         for(const perm of command.permissions) {
             if(!validPermissions.includes(perm)) {

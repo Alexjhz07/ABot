@@ -6,6 +6,15 @@ module.exports = {
     description: 'Gives the user a random number of peanuts',
     async execute(client, message, args, Discord, profileData) {
         const randomNumber = Math.floor(Math.random() * 50) + 1; //[1, 50]
+        const jackPot = Math.floor(Math.random() * 100) + 1; //[1, 100]
+
+        if(jackPot == 42) {
+            profileData.coins += 300;
+            profileData.stats.stonksUsed++;
+            profileData.stonksReceived += randomNumber;
+            await profileData.save();
+            return message.channel.send(`***JACKPOT!***\n${message.author.username} just won the stonks jackpot!\n*300* peanuts were added to their balance!`);
+        }
         
         profileData.coins += randomNumber;
         profileData.stats.stonksUsed++;
