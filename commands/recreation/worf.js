@@ -17,21 +17,17 @@ function generatePrompt(humanMsg) {
     AI: You've worked very hard, I think you did great!
     Human: ${humanMsg}
     AI:`;
-  }
+}
 
 module.exports = {
     name: 'worf',
     aliases: ['w', 'chat'],
     permissions: [],
     cooldown: 10,
-    description: "UNDER CONSTRUCTION",
+    description: "Forward your question to an intelligent system!",
     async execute(client, message, args, Discord, profileData) {
         if(profileData.permissions.worfAccess == false) {
             return message.channel.send('Error: Whitelist access required for this command');
-        }
-
-        if(message.guild.id == 582029063179206684 && message.channel.id != 935771696718282842) {
-            return message.channel.send('This command can only be used in the Bond channel');
         }
 
         if(!args.length) {

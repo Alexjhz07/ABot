@@ -40,6 +40,10 @@ const validPermissions = [
 module.exports = async (client, Discord, message) => {
     if(message.author.bot) return;
 
+    if(message.guild.id == 582029063179206684 && message.channel.id != 935771696718282842) {
+        return message.channel.send('Commands can only be used in the Bond channel');
+    }
+
     let profileData;
     const currentTime = Date.now();
 
