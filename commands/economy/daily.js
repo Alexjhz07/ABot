@@ -1,9 +1,10 @@
 const DAILY = 60;
-const MONTHLY = 600;
+const WEEKLY = 180;
+const MONTHLY = 800;
 
 module.exports = {
     name: 'daily',
-    aliases: ['monthly'],
+    aliases: ['weekly','monthly'],
     permissions: [],
     cooldown: 0,
     description: 'A periodic income for the user',
@@ -23,6 +24,19 @@ module.exports = {
                 }
             } else {
                 message.channel.send(`Your next daily will be in ${((profileData.stats.dailyNext - currentTime) / (1000 * 3600)).toFixed(1)} hours.`);
+            }
+        } else if(msg.includes('weekl')) {
+            if(currentTime >= profileData.stats.weeklyNext || !profileData.stats.weeklyNext) {
+                try {
+                    profileData.coins += WEEKLY;
+                    profileData.stats.weeklyNext = currentTime + 86400000 * 7;
+                    await profileData.save();
+                    message.channel.send(`Successfully collected ${WEEKLY} peanuts from weekly.\nYou now have ${profileData.coins} peanuts in your wallet.`);
+                } catch(err) {
+                    return console.log(err);
+                }
+            } else {
+                message.channel.send(`Your next weekly will be in ${((profileData.stats.weeklyNext - currentTime) / (1000 * 3600 * 24)).toFixed(1)} days.`);
             }
         } else if(msg.includes('month')) {
             if(currentTime >= profileData.stats.monthlyNext || !profileData.stats.monthlyNext) {

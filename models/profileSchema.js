@@ -9,6 +9,7 @@ const profileSchema = new mongoose.Schema({
         exp: { type: Number, default: 0 },
         expNext: { type: Number, default: 0 },
         dailyNext: { type: Number, default: 0 },
+        weeklyNext: { type: Number, default: 0 },
         monthlyNext: { type: Number, default: 0 },
         stonksUsed: { type: Number, default: 0 },
         stonksReceived: { type: Number, default: 0 },
