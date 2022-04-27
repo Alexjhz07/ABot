@@ -7,37 +7,16 @@ module.exports = {
     cooldown: 0,
     description: "Utilize Bond's predictive powers!",
     async execute(client, message, args, Discord, profileData) {
-        if(!args.length) {
-            return message.channel.send(`You must specify a question for Bond!`);
+        if(profileData.permissions.worfAccess == false) {
+            return message.channel.send('Worf is undergoing reconstruction, please check again later.');
         }
 
-        const responses = [
-            "It is certain.",
-            "It is decidedly so.",
-            "Without a doubt.",
-            "Yes definitely.",
-            "You may rely on it.",
-            "As I see it, yes.",
-            "Most likely.",
-            "Outlook good.",
-            "Yes.",
-            "Signs point to yes.",
-            "Reply hazy, try again.",
-            "Ask again later.",
-            "Better not tell you now.",
-            "Cannot predict now.",
-            "Concentrate and ask again.",
-            "Don't count on it.",
-            "My reply is no.",
-            "My sources say no.",
-            "Outlook not so good.",
-            "Very doubtful."
-        ]
-        
-        let rng = Math.floor(Math.random() * responses.length); //[0, 20]
+        if(!args.length) {
+            return message.channel.send(`Input cannot be empty!`);
+        }
 
-        message.channel.send(responses[rng]);
-        profileData.stats.worfAsked++;
-        profileData.save();
+        message.channel.send("Done");
+        //profileData.stats.worfAsked++;
+        //profileData.save();
     }
 }

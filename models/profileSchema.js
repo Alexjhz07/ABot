@@ -20,6 +20,9 @@ const profileSchema = new mongoose.Schema({
         pokeFail: { type: Number, default: 0 },
         beenPoked: { type: Number, default: 0 },
         worfAsked: { type: Number, default: 0 }
+    },
+    permissions: {
+        worfAccess: { type: Boolean, default: false}
     }
 });
 
