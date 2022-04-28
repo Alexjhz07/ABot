@@ -7,24 +7,14 @@ module.exports = {
     cooldown: 300,
     description: "Interactive command with mysterious properties...",
     async execute(client, message, args, Discord, profileData) {
-        if(message.author.id != process.env.YOR) {
-            return message.channel.send(`||Heh||`);
-        }
-
-        if(args.length != 1) {
-            return message.channel.send(`||Invalid target specified!||`);
-        }
+        if (message.author.id != process.env.YOR) return message.channel.send(`||Heh||`);
+        if (args.length != 1)return message.channel.send(`||Invalid target specified!||`);
 
         const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
 
-        if(!receiver) {
-            return message.channel.send(`||You tried looking for a target but found none...||`);
-        }
-
-        if(message.author == receiver.user) {
-            return message.channel.send(`||...That would be dangerous||`);
-        }
+        if (!receiver) return message.channel.send(`||You tried looking for a target but found none...||`);
+        if (message.author == receiver.user) return message.channel.send(`||...That would be dangerous||`);
         
         const receiverAcc = await profileModel.findOne(
             {
@@ -32,9 +22,7 @@ module.exports = {
             }
         )
 
-        if(!receiverAcc) {
-            return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
-        }
+        if (!receiverAcc) return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
         
         let rng = Math.floor(Math.random() * 6); //[0, 5]
         let amount = Math.floor(Math.random() * 14) + 2; //[2, 15]

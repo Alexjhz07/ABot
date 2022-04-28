@@ -38,7 +38,7 @@ const validPermissions = [
 ]
 
 module.exports = async (client, Discord, message) => {
-    if(message.author.bot) return;
+    if (message.author.bot) return;
 
     let profileData;
     const currentTime = Date.now();
@@ -46,101 +46,70 @@ module.exports = async (client, Discord, message) => {
     try {
         profileData = await profileModel.findOne({ userID: message.author.id })
 
-        if(!profileData) {
+        if (!profileData) {
             profileData = await profileModel.create({
                 userID: message.author.id,
-                serverID: message.guild.id,
-                coins: 0,
-                bank: 0,
-                stats: {
-                    exp: 0,
-                    expNext: currentTime,
-                    dailyNext: currentTime,
-                    monthlyNext: currentTime,
-                    stonksUsed: 0,
-                    stonksReceived: 0,
-                    flipsWon: 0,
-                    flipsLost: 0,
-                    flipsPeanutsWon: 0,
-                    flipsPeanutsLost: 0,
-                    pokeSucceed: 0,
-                    pokeFail: 0,
-                    beenPoked: 0,
-                    worfAsked: 0
-                }
+                serverID: message.guild.id
             });
             await profileData.save();
         }
-    } catch(err) {
+    } catch (err) {
         console.log(err);
     }
 
-    if(currentTime >= profileData.stats.expNext || !profileData.stats.expNext) {
-        try {
-            xp = Math.floor(Math.random() * 50) + 1; //[1, 50]
-            profileData.stats.exp += xp;
-            nextTime = Math.floor(Math.random() * process.env.TIMERRNG) + parseInt(process.env.TIMERMIN);
-            profileData.stats.expNext = currentTime + nextTime;
-            await profileData.save();
-        } catch(err) {
-            return console.log(err);
-        }
+    if (currentTime >= profileData.stats.expNext || !profileData.stats.expNext) {
+        xp = Math.floor(Math.random() * 50) + 1; //[1, 50]
+        profileData.stats.exp += xp;
+        nextTime = Math.floor(Math.random() * process.env.TIMERRNG) + parseInt(process.env.TIMERMIN);
+        profileData.stats.expNext = currentTime + nextTime;
+        await profileData.save()
     }
 
-    if(!message.content.startsWith(process.env.PREFIX)) return;
-
-    if(message.guild.id == 582029063179206684 && message.channel.id != 935771696718282842) {
-        return message.channel.send('Commands can only be used in the Bond channel');
-    }
-
-    if(message.content.startsWith(";") && message.content.endsWith(";") || message.content.startsWith(";;")) return;
+    if (!message.content.startsWith(process.env.PREFIX)) return;
+    if (message.guild.id == 582029063179206684 && message.channel.id != 935771696718282842) return;
 
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); 
 
-    if(!command) {
-        return message.channel.send(`Error: "${cmd}" is not a valid command`);
-    }
+    if (!command) return message.channel.send(`Error: "${cmd}" is not a valid command`);
 
-    if(command.permissions.length && message.author.id != process.env.OWNER) {
+    if (command.permissions.length && message.author.id != process.env.OWNER) {
         let invalidPerms = [];
-        for(const perm of command.permissions) {
-            if(!validPermissions.includes(perm)) {
+        for (const perm of command.permissions) {
+            if (!validPermissions.includes(perm)) {
                 message.channel.send(`Error: An invalid permission "${perm}" was located while attempting this command.\nPlease notify my owner about this bug.`);
                 return console.log(`Invalid permission "${perm}" detected while attempting command "${cmd}" from user ${message.author.username}`);
             }
-            if(!message.member.permissions.has(perm)) {
+            if (!message.member.permissions.has(perm)) {
                 invalidPerms.push(perm);
                 break;
             }
         }
-        if(invalidPerms.length) {
+        if (invalidPerms.length) {
             return message.channel.send(`Error: Missing permission ${invalidPerms}`);
         }
     }
 
-    if(!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new Discord.Collection());
-    }
+    if (!cooldowns.has(command.name)) cooldowns.set(command.name, new Discord.Collection());
 
     const timeStamps = cooldowns.get(command.name);
     const cooldown = (command.cooldown) * 1000;
 
-    if(timeStamps.has(message.author.id)) {
+    if (timeStamps.has(message.author.id)) {
         const expirationTime = timeStamps.get(message.author.id) + cooldown;
 
-        if(currentTime < expirationTime) {
+        if (currentTime < expirationTime) {
             let unit = 'seconds';
             let timeLeft = Math.ceil((expirationTime - currentTime) / 1000);
 
-            if((timeLeft / 60).toFixed(1) > 1) {
+            if ((timeLeft / 60).toFixed(1) > 1) {
                 timeLeft = (timeLeft / 60).toFixed(1);
                 unit = 'minutes';
-            } else if((timeLeft / 60).toFixed(1) == 1) {
+            } else if ((timeLeft / 60).toFixed(1) == 1) {
                 timeLeft = 1;
                 unit = 'minute';
-            } else if(timeLeft == 1) {
+            } else if (timeLeft == 1) {
                 unit = 'second';
             }
 

@@ -8,7 +8,7 @@ module.exports = {
         const randomNumber = Math.floor(Math.random() * 50) + 1; //[1, 50]
         const jackPot = Math.floor(Math.random() * 100) + 1; //[1, 100]
 
-        if(jackPot == 42) {
+        if (jackPot == 42) {
             profileData.coins += 300;
             profileData.stats.stonksUsed++;
             profileData.stonksReceived += randomNumber;
@@ -21,7 +21,7 @@ module.exports = {
         profileData.stats.stonksReceived += randomNumber;
         await profileData.save();
         
-        if(randomNumber == 1) {
+        if (randomNumber == 1) {
             return message.channel.send(`The stonks are not very high today...\n${message.author.username} just received ${randomNumber} peanut from the heavens.\nTheir pocket is now at ${profileData.coins} peanuts.`);
         } else if (randomNumber < 15) {
             return message.channel.send(`${message.author.username} just had ${randomNumber} more peanuts added to their pockets.\nTheir balance is now ${profileData.coins} peanuts.`);

@@ -7,21 +7,14 @@ const loadDir = (dirs) => {
 
     msg += `***${dirs.toUpperCase()}***\n\n`;
 
-    for(const file of commandFiles) {
-        if(file == 'help.js') {
-            continue;
-        }
+    for (const file of commandFiles) {
+        if (file == 'help.js') continue;
+
         const command = require(`../../commands/${dirs}/${file}`);
         msg += `Command Name: ${command.name}\n`;
 
-        if(command.aliases.length) {
-            msg += `Aliases: ${command.aliases.join(', ')}\n`;
-        }
-        
-        if(command.permissions.length) {
-            msg += `Permissions: ${command.permissions.join(', ')}\n`;
-        }
-
+        if (command.aliases.length) msg += `Aliases: ${command.aliases.join(', ')}\n`;
+        if (command.permissions.length) msg += `Permissions: ${command.permissions.join(', ')}\n`;
         msg += `Description: ${command.description}\nCooldown: ${command.cooldown} seconds\n\n`
     }
 }

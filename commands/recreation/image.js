@@ -14,14 +14,10 @@ module.exports = {
     cooldown: 10,
     description: "Scrapes an image from Google",
     async execute(client, message, args, Discord, profileData) {
-
-        if(message.author.id != process.env.OWNER) {
-            message.channel.send("Error: This command requires owner status");
-            return;
-        }
+        if (message.author.id != process.env.OWNER) return message.channel.send("Error: This command requires owner status");
 
         const imageQuery = args.join(' ');
-        if(!imageQuery) return message.channel.send('Error: Argument cannot be empty.');
+        if (!imageQuery) return message.channel.send('Error: Argument cannot be empty.');
 
         const timeStart = Date.now();
 
@@ -34,6 +30,6 @@ module.exports = {
         }).catch((err) => {
             console.log(err);
             message.channel.send('Error: Either this command is already in use or an error has occurred.\nPlease try again later.');
-        })
+        });
     }
 }

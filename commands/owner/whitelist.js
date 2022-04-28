@@ -7,20 +7,13 @@ module.exports = {
     cooldown: 1,
     description: "Whitelist users",
     async execute(client, message, args, Discord, profileData) {
-        if(message.author.id != process.env.OWNER) {
-            return message.channel.send('Error: This command requires owner status');
-        }
-
-        if(args.length != 2) {
-            return message.channel.send(`Whitelist takes 2 arguments`);
-        }
+        if (message.author.id != process.env.OWNER) return message.channel.send('Error: This command requires owner status');
+        if (args.length != 2) return message.channel.send(`Whitelist takes 2 arguments`);
 
         const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
 
-        if(!receiver) {
-            return message.channel.send(`Could not find a user with ID ${userID}`)
-        }
+        if (!receiver) return message.channel.send(`Could not find a user with ID ${userID}`)
 
         const receiverAcc = await profileModel.findOne(
             {
@@ -28,9 +21,7 @@ module.exports = {
             }
         )
 
-        if(!receiverAcc) {
-            return message.channel.send(`Error: Cannot locate account for ${receiver.user.username}. Please try again`);
-        }
+        if (!receiverAcc) return message.channel.send(`Error: Cannot locate account for ${receiver.user.username}. Please try again`);
 
         const listArg = args[0].toUpperCase();
 

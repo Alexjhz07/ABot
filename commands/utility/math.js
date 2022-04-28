@@ -7,15 +7,12 @@ module.exports = {
     cooldown: 0,
     description: "Evaluates a mathematical expression",
     execute(client, message, args, Discord, profileData) {
-        if(!args.length) {
-            message.channel.send('Error: Argument cannot be empty.');
-            return;
-        } else {
-            try {
-                message.channel.send(String(math.evaluate(args.join(' '))));
-            } catch (e) {
-                message.channel.send("Error: Invalid equation format");
-            }
+        if (!args.length) return message.channel.send('Error: Argument cannot be empty.');
+        
+        try {
+            message.channel.send(String(math.evaluate(args.join(' '))));
+        } catch (e) {
+            message.channel.send("Error: Invalid equation format");
         }
     }
 }

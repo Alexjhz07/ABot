@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 0,
     description: "Donate some peanuts to another player",
     async execute(client, message, args, Discord, profileData) {
-        if(args.length != 2) {
+        if (args.length != 2) {
             return message.channel.send(`Error: Donate only accepts two arguments`);
         }
 
@@ -15,7 +15,7 @@ module.exports = {
         const receiver = message.guild.members.cache.get(userID);
         let amount;
 
-        if(!receiver) {
+        if (!receiver) {
             return message.channel.send(`Error: Receiver ${userID} not found`);
         }
         
@@ -28,11 +28,11 @@ module.exports = {
             amount = parseInt(args[0]);
         } 
 
-        if(amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
+        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
-        if(message.author == receiver.user) {
+        if (message.author == receiver.user) {
             return message.channel.send('Error: Cannot send peanuts to yourself');
         }
 
@@ -42,24 +42,19 @@ module.exports = {
             }
         )
 
-        if(!receiverAcc) {
+        if (!receiverAcc) {
             return message.channel.send(`Error: Cannot locate account for ${receiver.user.username}. Please try again`);
         }
 
-        if(0 > profileData.coins - amount) {
+        if (0 > profileData.coins - amount) {
             return message.channel.send(`Error: You do not have enough to send ${amount} peanuts to ${receiver.user.username}`);
         }
-
-        try {
-            receiverAcc.coins += amount;
-            profileData.coins -= amount;
-            receiverAcc.save();
-            profileData.save();
-        } catch(err) {
-            console.log(err);
-            return message.channel.send(`Error: Could not complete the transfer from ${message.author.username} to ${receiver.user.username}`);
-        }
-
+        
+        receiverAcc.coins += amount;
+        profileData.coins -= amount;
+        receiverAcc.save();
+        profileData.save();
+        
         return message.channel.send(`Successfully transferred ${amount} peanuts from ${message.author.username} to ${receiver.user.username}`);
     }
 }

@@ -7,20 +7,13 @@ module.exports = {
     cooldown: 0,
     description: "Interactive command with mysterious properties...",
     async execute(client, message, args, Discord, profileData) {
-        if(args.length != 1) {
-            return message.channel.send(`||Poke must have one target!||`);
-        }
+        if (args.length != 1) return message.channel.send(`||Poke must have one target!||`);
 
         const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
 
-        if(!receiver) {
-            return message.channel.send(`||You must poke someone on the server||`);
-        }
-
-        if(message.author == receiver.user) {
-            return message.channel.send(`||Silly peanut, you can't poke yourself!||`);
-        }
+        if (!receiver) return message.channel.send(`||You must poke someone on the server||`);
+        if (message.author == receiver.user) return message.channel.send(`||Silly peanut, you can't poke yourself!||`);
         
         const receiverAcc = await profileModel.findOne(
             {
@@ -28,31 +21,25 @@ module.exports = {
             }
         )
 
-        if(!receiverAcc) {
-            return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
-        }
+        if (!receiverAcc) return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
         
         let rng = Math.floor(Math.random() * 15); //[0, 14]
         let amount = Math.floor(Math.random() * 14) + 2; //[2, 15]
-
         let msg = '';
 
         async function updateStates(uGet, rGet, pSucceed) {
-            try {
-                profileData.coins += uGet;
-                receiverAcc.coins += rGet;
-                if(pSucceed) {
-                    profileData.stats.pokeSucceed++;
-                } else {
-                    profileData.stats.pokeFail++;                    
-                }
-                receiverAcc.stats.beenPoked++;
+            profileData.coins += uGet;
+            receiverAcc.coins += rGet;
 
-                await profileData.save();
-                await receiverAcc.save();
-            } catch(err) {
-                return console.log(err);
+            if(pSucceed) {
+                profileData.stats.pokeSucceed++;
+            } else {
+                profileData.stats.pokeFail++;                    
             }
+
+            receiverAcc.stats.beenPoked++;
+            await profileData.save();
+            await receiverAcc.save();
         }
 
         switch(rng) {

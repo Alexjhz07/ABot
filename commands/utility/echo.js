@@ -5,11 +5,8 @@ module.exports = {
     cooldown: 5,
     description: "Restates user arguments",
     execute(client, message, args, Discord, profileData) {
-        if(!args.length) {
-            message.channel.send('Error: Argument cannot be empty.');
-            return;
-        } else {
-            message.channel.send(args.join(' '));
-        }
+        if (!args.length) return message.channel.send('Error: Argument cannot be empty.');
+            
+        message.channel.send(args.join(' '));
     }
 }

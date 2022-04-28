@@ -7,9 +7,7 @@ module.exports = {
     cooldown: 5,
     description: 'Fetch the database information of a list of users',
     async execute(client, message, args, Discord, profileData) {
-        // Usage: *whois <@user>, *whois user_id
-
-        if(!args.length) {
+        if (!args.length) {
             return message.channel.send(`**===== Stats for ${message.author.username} [Level ${Math.floor(profileData.stats.exp / process.env.XPPERLEVEL)}] =====**\n
             Experience: ${profileData.stats.exp}
             Peanuts requested: ${profileData.stats.stonksUsed} times
@@ -26,7 +24,7 @@ module.exports = {
 
         let msg = '';
 
-        for(const arg of args) {
+        for (const arg of args) {
             const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
 
             if (userID == '') {
@@ -41,7 +39,7 @@ module.exports = {
                 }
             )
 
-            if(!member) {
+            if (!member) {
                 msg += `Error: Could not find a member ${userID}\n\n`;
                 continue;
             } else if (!account) {

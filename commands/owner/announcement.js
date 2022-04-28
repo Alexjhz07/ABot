@@ -7,36 +7,32 @@ module.exports = {
     execute(client, message, args, Discord, profileData) {
         const [head, ...rest] = args;
 
-        if(message.author.id != process.env.OWNER) {
-            message.channel.send("Error: This command requires owner status");
-            return;
-        } else if(!args.length) {
-            message.channel.send("Error: Arguments cannot be empty");
-        } else {
-            let guild = client.guilds.cache.get(process.env.FSERVER);
-            let channel;
+        if (message.author.id != process.env.OWNER) return message.channel.send("Error: This command requires owner status");
+        if (!args.length) return message.channel.send("Error: Arguments cannot be empty");
 
-            if(guild) {
-                if(head.toLowerCase() == 'general') {
-                    channel = guild.channels.cache.get(process.env.FGCHANNEL);
-                } else if(head.toLowerCase() == 'bot'){
-                    channel = guild.channels.cache.get(process.env.FBCHANNEL);
-                } else {
-                    return message.channel.send(`Error: ${head} is an invalid channel.\nValid channels are "General" and "Bot".`);
-                }
+        let guild = client.guilds.cache.get(process.env.FSERVER);
+        let channel;
 
-                if(!rest.length) {
-                    return message.channel.send(`Error: Announcement cannot be empty.`);
-                }
-                
-                if(channel) {
-                    channel.send(rest.join(' '));
-                } else {
-                    console.log(`Error identifying channel`);
-                }
+        if (guild) {
+            if (head.toLowerCase() == 'general') {
+                channel = guild.channels.cache.get(process.env.FGCHANNEL);
+            } else if (head.toLowerCase() == 'bot'){
+                channel = guild.channels.cache.get(process.env.FBCHANNEL);
             } else {
-                console.log(`Error identifying guild`);
+                return message.channel.send(`Error: ${head} is an invalid channel.\nValid channels are "General" and "Bot".`);
             }
+
+            if (!rest.length) {
+                return message.channel.send(`Error: Announcement cannot be empty.`);
+            }
+            
+            if (channel) {
+                channel.send(rest.join(' '));
+            } else {
+                console.log(`Error identifying channel`);
+            }
+        } else {
+            console.log(`Error identifying guild`);
         }
     }
 }

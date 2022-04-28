@@ -26,19 +26,12 @@ module.exports = {
     cooldown: 10,
     description: "Forward your question to an intelligent system!",
     async execute(client, message, args, Discord, profileData) {
-        if(profileData.permissions.worfAccess == false) {
-            return message.channel.send('Error: Whitelist access required for this command');
-        }
-
-        if(!args.length) {
-            return message.channel.send(`Input cannot be empty!`);
-        }
+        if (!profileData.permissions.worfAccess) return message.channel.send('Error: Whitelist access required for this command');
+        if (!args.length) return message.channel.send(`Input cannot be empty!`);
         
         const userMessage = args.join(' ');
 
-        if(userMessage.length >= 250) {
-            return message.channel.send(`Error, input must be under 250 characters`);
-        }
+        if (userMessage.length >= 250) return message.channel.send(`Error, input must be under 250 characters`);
 
         // CURRENTLY NOT WORKING
         // const contentCheck = await openai.createCompletion("content-filter-alpha", {
@@ -54,7 +47,7 @@ module.exports = {
         // console.log(contentResult);
         // console.log(typeof contentResult);
 
-        // if(contentResult > 0) {
+        // if (contentResult > 0) {
         //     profileData.permissions.worfAccess = false;
         //     profileData.save();
         //     return message.channel.send('Error, an input was detected that did not pass my content filter.\nWhitelist has been temporarily removed.')
