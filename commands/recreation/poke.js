@@ -4,7 +4,7 @@ module.exports = {
     name: 'poke',
     aliases: [],
     permissions: [],
-    cooldown: 0,
+    cooldown: 5,
     description: "Interactive command with mysterious properties...",
     async execute(client, message, args, Discord, profileData) {
         if (args.length != 1) return message.channel.send(`||Poke must have one target!||`);
