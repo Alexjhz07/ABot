@@ -5,7 +5,6 @@ module.exports = {
     cooldown: 1,
     description: "Show this to your investors",
     async execute(client, message, args, Discord, profileData) {
-        console.log(profileData.stocks.owned);
         if (profileData.stocks.owned.length > 0) {
             var msg = `**Portfolio of ${message.author.username}**\n`
 

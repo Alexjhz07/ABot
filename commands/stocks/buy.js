@@ -14,11 +14,12 @@ module.exports = {
 
         if (args.length != 2) return message.channel.send('Incorrect use of buy.\n;command arg1 arg2\narg1 = Stock Symbol (e.g., GOOG)\narg2 = Shares (e.g., 3))');
         
-        let shares = args[1];
+        let requestShares = args[1];
 
-        if (shares >= Number.MAX_SAFE_INTEGER || shares <= 0 || shares % 1 != 0) return message.channel.send('Invalid shares argument');
+        if (requestShares >= Number.MAX_SAFE_INTEGER || requestShares <= 0 || requestShares % 1 != 0) return message.channel.send('Invalid shares argument');
 
-        let requestSymbol = args[0];
+        requestShares = parseInt(requestShares);
+        let requestSymbol = args[0].toUpperCase();
         let currentPrice;
 
         try {
@@ -35,14 +36,10 @@ module.exports = {
 
         if (currentPrice == "") return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
-        const price = currentPrice * shares;
+        const price = currentPrice * requestShares;
 
         let stockProfile = {
-            symbol: requestSymbol,
-            shares: 0,
-            buyPrice: currentPrice,
-            invested: 0,
-            returned: 0
+            symbol: requestSymbol
         };
 
         if (!profileData.stocks.owned.some(e => {
@@ -52,29 +49,31 @@ module.exports = {
             }
         })) {
             profileData.stocks.owned.push(stockProfile);
+            profileData.stocks.owned.some(e => {
+                stockProfile = e;
+            })
         }
 
         if (msg.includes('buy') || msg.includes('inv')) {
             if (profileData.coins < price) {
-                message.channel.send(`Error, you do not have enough to purchase ${requestSymbol} shares.\nCurrent cost for ${shares} shares at ${currentPrice} each: ${price}`);
+                message.channel.send(`Error, you do not have enough to purchase ${requestSymbol} shares.\nCurrent cost for ${requestShares} shares at ${currentPrice} each: ${price}`);
             } else {
                 profileData.coins -= price;
-                stockProfile.shares += shares;
+                stockProfile.shares += requestShares;
                 stockProfile.buyPrice = currentPrice;
                 stockProfile.invested += price;
-                message.channel.send(`Successfully purchased ${shares} ${requestSymbol} shares for ${price} peanuts!`);
+                message.channel.send(`Successfully purchased ${requestShares} ${requestSymbol} shares for ${price} peanuts!`);
             }
         } else if (msg.includes('sel') || msg.includes('liq')) {
-            if (stockProfile.shares - shares < 0) {
-                message.channel.send(`Error, you requested to sell ${shares} ${requestSymbol} shares but currently possess ${stockProfile.shares}`)
+            if (stockProfile.shares - requestShares < 0) {
+                message.channel.send(`Error, you requested to sell ${requestShares} ${requestSymbol} shares but currently possess ${stockProfile.shares}`)
             } else {
                 profileData.coins += price;
-                stockProfile.shares -= shares;
+                stockProfile.shares -= requestShares;
                 stockProfile.returned += price;
-                message.channel.send(`Successfully sold ${shares} ${requestSymbol} shares for ${price} peanuts!`);
+                message.channel.send(`Successfully sold ${requestShares} ${requestSymbol} shares for ${price} peanuts!`);
             }
         }
-        
         profileData.save();
     }
 }

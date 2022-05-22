@@ -10,6 +10,6 @@ module.exports = {
         message.channel.send('Calculating latency').then(msg => {
             msg.delete();
             message.channel.send(`Pong!\nLatency: ${msg.createdTimestamp - message.createdTimestamp}ms\nAPI Latency: ${client.ws.ping}ms`);
-        })
+        });
     }
 }

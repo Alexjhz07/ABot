@@ -11,11 +11,11 @@ module.exports = {
     async execute(client, message, args, Discord, profileData) {
         if (args.length != 1) return message.channel.send('Quote can only accept 1 stock symbol as its argument');
         
-        let symbol = args[0];
+        let requestSymbol =  args[0].toUpperCase();
         let currentPrice;
 
         try {
-            const response = await fetch(`https://ca.finance.yahoo.com/quote/${symbol}`);
+            const response = await fetch(`https://ca.finance.yahoo.com/quote/${requestSymbol}`);
             const text = await response.text();
             const dom = new JSDOM(text);
             const parent = dom.window.document.querySelector("#quote-header-info");
@@ -23,11 +23,20 @@ module.exports = {
             currentPrice = parseFloat(child.textContent.replace(/,/g, '')).toFixed(0);
         } catch (e) {
             console.log(e);
-            return message.channel.send(`Error while searching for stock ${symbol}`);
+            return message.channel.send(`Error while searching for stock ${requestSymbol}`);
         }
 
-        if (currentPrice == "") return message.channel.send(`Error while searching for stock ${symbol}`);
+        if (currentPrice == "") return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
-        return message.channel.send(`Current price for ${symbol}: ${currentPrice}`);
+        let userShares = 0;
+
+        profileData.stocks.owned.some(e => {
+            if (e.symbol == requestSymbol) {
+                userShares = e.shares;
+                return true;
+            }
+        });
+
+        return message.channel.send(`Current price for ${requestSymbol}: ${currentPrice}\nYour shares: ${userShares}`);
     }
 }
