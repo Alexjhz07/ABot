@@ -19,7 +19,7 @@ const loadDir = (dirs) => {
     }
 }
 
-['economy', 'recreation', 'utility'].forEach(e => loadDir(e));
+['economy', 'recreation', 'stocks', 'utility'].forEach(e => loadDir(e));
 
 module.exports = {
     name: 'help',
@@ -29,6 +29,11 @@ module.exports = {
     description: "Help command, sends commands to user dm.",
     execute(client, message, args, Discord, profileData) {
         message.channel.send('Commands have been sent to your direct messages.');
+
+        if (msg.length >= 2000) {
+            return message.channel.send('Message is too long, please tell Alex to fix this')
+        }
+
         client.users.cache.get(message.author.id).send(msg);
     }
 }

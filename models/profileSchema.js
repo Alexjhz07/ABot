@@ -1,5 +1,13 @@
 const mongoose = require('mongoose');
 
+const stockSchema = new mongoose.Schema({
+    symbol: { type: String, require: true },
+    shares: { type: Number, default: 0 },
+    buyPrice: { type: Number, default: 0 },
+    invested: { type: Number, default: 0 },
+    returned: { type: Number, default: 0 }
+});
+
 const profileSchema = new mongoose.Schema({
     userID: { type: String, require: true, unique: true },
     serverID: { type: String, require: true },
@@ -24,6 +32,11 @@ const profileSchema = new mongoose.Schema({
     },
     permissions: {
         worfAccess: { type: Boolean, default: false}
+    },
+    stocks: {
+        owned: { type: [stockSchema], default: [] },
+        investedTotal: { type: Number, default: 0 },
+        returnedTotal: { type: Number, default: 0 }
     }
 });
 
