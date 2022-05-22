@@ -36,6 +36,8 @@ module.exports = {
 
         if (currentPrice == "") return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
+        if (currentPrice == 0) return message.channel.send(`${requestSymbol} is currently worth 0 (Rounded), please try again later.`);
+        
         const price = currentPrice * requestShares;
 
         let stockProfile = {
