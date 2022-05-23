@@ -26,17 +26,19 @@ module.exports = {
             return message.channel.send(`Error while searching for stock ${requestSymbol}`);
         }
 
-        if (currentPrice == "") return message.channel.send(`Error while searching for stock ${requestSymbol}`);
+        if (currentPrice == "" || isNaN(currentPrice)) return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
         let userShares = 0;
+        let userPrice = "No data";
 
         profileData.stocks.owned.some(e => {
             if (e.symbol == requestSymbol) {
                 userShares = e.shares;
+                userPrice = e.buyPrice;
                 return true;
             }
         });
 
-        return message.channel.send(`Current price for ${requestSymbol}: ${currentPrice}\nYour shares: ${userShares}`);
+        return message.channel.send(`Current price for ${requestSymbol}: ${currentPrice}\nMost recent buy price: ${userPrice}\nYour shares: ${userShares}`);
     }
 }
