@@ -8,7 +8,7 @@ module.exports = {
     description: 'Returns the user balance',
     async execute(client, message, args, Discord, profileData) {
         if (!args.length) {
-            return message.channel.send(`Hi, ${message.author.username}.\nYou have ${profileData.coins} peanuts in your pocket.\nYour peanut stash is at ${profileData.bank}.`);
+            return message.channel.send(`Hi, ${message.author.username}.\nYou have ${profileData.coins.toFixed(2)} peanuts in your pocket.\nYour peanut stash is at ${profileData.bank.toFixed(2)}.`);
         }
 
         let msg = '';
