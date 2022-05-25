@@ -15,7 +15,8 @@ module.exports = {
             if (msg.length >= 2000) {
                 return message.channel.send('Your portfolio is huge! Please tell Alex to stop being lazy and find a way to display your portfolio');
             } else {
-                return message.channel.send(msg);
+                message.channel.send('Your portfolio has been sent to your direct messages');
+                return client.users.cache.get(message.author.id).send(msg);
             }
         } else {
             return message.channel.send(`Empty portfolio`);
