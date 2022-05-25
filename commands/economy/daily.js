@@ -17,7 +17,7 @@ module.exports = {
                 profileData.coins += DAILY;
                 profileData.stats.dailyNext = currentTime + 86400000;
                 await profileData.save();
-                message.channel.send(`Successfully collected ${DAILY} peanuts from daily.\nYou now have ${profileData.coins} peanuts in your wallet.`);
+                message.channel.send(`Successfully collected ${DAILY} peanuts from daily.\nYou now have ${profileData.coins.toFixed(2)} peanuts in your wallet.`);
             } else {
                 message.channel.send(`Your next daily will be in ${((profileData.stats.dailyNext - currentTime) / (1000 * 3600)).toFixed(1)} hours.`);
             }
@@ -26,7 +26,7 @@ module.exports = {
                 profileData.coins += WEEKLY;
                 profileData.stats.weeklyNext = currentTime + 86400000 * 7;
                 await profileData.save();
-                message.channel.send(`Successfully collected ${WEEKLY} peanuts from weekly.\nYou now have ${profileData.coins} peanuts in your wallet.`);
+                message.channel.send(`Successfully collected ${WEEKLY} peanuts from weekly.\nYou now have ${profileData.coins.toFixed(2)} peanuts in your wallet.`);
             } else {
                 message.channel.send(`Your next weekly will be in ${((profileData.stats.weeklyNext - currentTime) / (1000 * 3600 * 24)).toFixed(1)} days.`);
             }
@@ -35,7 +35,7 @@ module.exports = {
                 profileData.coins += MONTHLY;
                 profileData.stats.monthlyNext = currentTime + 86400000 * 30;
                 await profileData.save();
-                message.channel.send(`Successfully collected ${MONTHLY} peanuts from monthly.\nYou now have ${profileData.coins} peanuts in your wallet.`);
+                message.channel.send(`Successfully collected ${MONTHLY} peanuts from monthly.\nYou now have ${profileData.coins.toFixed(2)} peanuts in your wallet.`);
             } else {
                 message.channel.send(`Your next monthly will be in ${((profileData.stats.monthlyNext - currentTime) / (1000 * 3600 * 24)).toFixed(1)} days.`);
             }

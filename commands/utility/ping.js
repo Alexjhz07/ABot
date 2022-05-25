@@ -1,5 +1,3 @@
-const { CommandInteractionOptionResolver } = require("discord.js");
-
 module.exports = {
     name: 'ping',
     aliases: [],

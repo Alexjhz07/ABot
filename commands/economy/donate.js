@@ -25,10 +25,10 @@ module.exports = {
             }
             amount = profileData.coins;
         } else if (Number(args[0])) {
-            amount = parseInt(args[0]);
+            amount = Math.round(args[0] * 1e2) / 1e2;
         } 
 
-        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
+        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
@@ -47,7 +47,7 @@ module.exports = {
         }
 
         if (0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have enough to send ${amount} peanuts to ${receiver.user.username}`);
+            return message.channel.send(`Error: You do not have enough to send ${amount.toFixed(2)} peanuts to ${receiver.user.username}`);
         }
         
         receiverAcc.coins += amount;
@@ -55,6 +55,6 @@ module.exports = {
         receiverAcc.save();
         profileData.save();
         
-        return message.channel.send(`Successfully transferred ${amount} peanuts from ${message.author.username} to ${receiver.user.username}`);
+        return message.channel.send(`Successfully transferred ${amount.toFixed(2)} peanuts from ${message.author.username} to ${receiver.user.username}`);
     }
 }

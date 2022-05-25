@@ -39,7 +39,7 @@ module.exports = {
                 continue;
             }
 
-            msg += `Account Owner: ${member.user.username}\nAccount Wallet: ${account.coins} peanuts\nAccount Bank: ${account.bank} peanuts\n\n`;
+            msg += `Account Owner: ${member.user.username}\nAccount Wallet: ${account.coins.toFixed(2)} peanuts\nAccount Bank: ${account.bank.toFixed(2)} peanuts\n\n`;
         }
 
         message.channel.send(msg);

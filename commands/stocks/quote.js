@@ -20,7 +20,7 @@ module.exports = {
             const dom = new JSDOM(text);
             const parent = dom.window.document.querySelector("#quote-header-info");
             const child = parent.querySelector('fin-streamer[data-field="regularMarketPrice"]');
-            currentPrice = parseFloat(child.textContent.replace(/,/g, '')).toFixed(0);
+            currentPrice = parseFloat(child.textContent.replace(/,/g, '')).toFixed(2);
         } catch (e) {
             console.log(e);
             return message.channel.send(`Error while searching for stock ${requestSymbol}`);

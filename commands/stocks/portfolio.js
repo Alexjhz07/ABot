@@ -9,7 +9,7 @@ module.exports = {
             var msg = `**Portfolio of ${message.author.username}**\n`
 
             for (const e of profileData.stocks.owned) {
-                msg += `\n${e.symbol}\nShares: ${e.shares}\nRecent Buy Price: ${e.buyPrice}\nTotal Invested: ${e.invested}\nTotal Returned: ${e.returned}\n`;
+                msg += `\n${e.symbol}\nShares: ${e.shares}\nRecent Buy Price: ${e.buyPrice.toFixed(2)}\nTotal Invested: ${e.invested.toFixed(2)}\nTotal Returned: ${e.returned.toFixed(2)}\n`;
             }
             
             if (msg.length >= 2000) {

@@ -28,17 +28,17 @@ module.exports = {
             const dom = new JSDOM(text);
             const parent = dom.window.document.querySelector("#quote-header-info");
             const child = parent.querySelector('fin-streamer[data-field="regularMarketPrice"]');
-            currentPrice = parseFloat(child.textContent.replace(/,/g, '')).toFixed(0);
+            currentPrice = Math.round(parseFloat(child.textContent.replace(/,/g, '')) * 1e2) / 1e2;
         } catch (e) {
             console.log(e);
             return message.channel.send(`Error while searching for stock ${requestSymbol}`);
         }
 
-        if (currentPrice == "") return message.channel.send(`Error while searching for stock ${requestSymbol}`);
+        if (currentPrice == "" || isNaN(currentPrice)) return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
-        if (currentPrice == 0) return message.channel.send(`${requestSymbol} is currently worth 0 (Rounded), please try again later.`);
+        if (currentPrice <= 0) return message.channel.send(`${requestSymbol} is currently worth 0 (Rounded), please try again later.`);
         
-        const price = currentPrice * requestShares;
+        const price = Math.round(currentPrice * requestShares * 1e2) / 1e2;
 
         let stockProfile = {
             symbol: requestSymbol
@@ -58,13 +58,13 @@ module.exports = {
 
         if (msg.includes('buy') || msg.includes('inv')) {
             if (profileData.coins < price) {
-                message.channel.send(`Error, you do not have enough to purchase ${requestSymbol} shares.\nCurrent cost for ${requestShares} shares at ${currentPrice} each: ${price}`);
+                message.channel.send(`Error, you do not have enough to purchase ${requestSymbol} shares.\nCurrent cost for ${requestShares} shares at ${currentPrice} each: ${price.toFixed(2)}`);
             } else {
                 profileData.coins -= price;
                 stockProfile.shares += requestShares;
                 stockProfile.buyPrice = currentPrice;
                 stockProfile.invested += price;
-                message.channel.send(`Successfully purchased ${requestShares} ${requestSymbol} shares for ${price} peanuts!`);
+                message.channel.send(`Successfully purchased ${requestShares} ${requestSymbol} shares for ${price.toFixed(2)} peanuts! (${currentPrice.toFixed(2)} per share)`);
             }
         } else if (msg.includes('sel') || msg.includes('liq')) {
             if (stockProfile.shares - requestShares < 0) {
@@ -73,7 +73,7 @@ module.exports = {
                 profileData.coins += price;
                 stockProfile.shares -= requestShares;
                 stockProfile.returned += price;
-                message.channel.send(`Successfully sold ${requestShares} ${requestSymbol} shares for ${price} peanuts!`);
+                message.channel.send(`Successfully sold ${requestShares} ${requestSymbol} shares for ${price.toFixed(2)} peanuts! (${currentPrice.toFixed(2)} per share)`);
             }
         }
         profileData.save();

@@ -22,13 +22,13 @@ module.exports = {
         await profileData.save();
         
         if (randomNumber == 1) {
-            return message.channel.send(`The stonks are not very high today...\n${message.author.username} just received ${randomNumber} peanut from the heavens.\nTheir pocket is now at ${profileData.coins} peanuts.`);
+            return message.channel.send(`The stonks are not very high today...\n${message.author.username} just received ${randomNumber} peanut from the heavens.\nTheir pocket is now at ${profileData.coins.toFixed(2)} peanuts.`);
         } else if (randomNumber < 15) {
-            return message.channel.send(`${message.author.username} just had ${randomNumber} more peanuts added to their pockets.\nTheir balance is now ${profileData.coins} peanuts.`);
+            return message.channel.send(`${message.author.username} just had ${randomNumber} more peanuts added to their pockets.\nTheir balance is now ${profileData.coins.toFixed(2)} peanuts.`);
         } else if (randomNumber < 35) {
-            return message.channel.send(`Not a bad day for stonks!\n${message.author.username} just received ${randomNumber} peanuts.\nTheir balance is now ${profileData.coins} peanuts.`);
+            return message.channel.send(`Not a bad day for stonks!\n${message.author.username} just received ${randomNumber} peanuts.\nTheir balance is now ${profileData.coins.toFixed(2)} peanuts.`);
         } else {
-            return message.channel.send(`Big stonks!\n${message.author.username} just received ${randomNumber} peanuts.\nTheir balance is now ${profileData.coins} peanuts.`);
+            return message.channel.send(`Big stonks!\n${message.author.username} just received ${randomNumber} peanuts.\nTheir balance is now ${profileData.coins.toFixed(2)} peanuts.`);
         }
     }
 }

@@ -7,16 +7,9 @@ module.exports = {
     async execute(client, message, args, Discord, profileData) {
         if (args.length != 2) return message.channel.send(`Error: You must bet some peanuts and predict the result to do the flip!`);
 
-        let amount = args[0];
-        
-        try {
-            amount = parseInt(args[0]);
-        } catch(err) {
-            console.log(err);
-            return message.channel.send(`Error: ${args[0]} is not a positive integer`);
-        }
+        let amount = parseInt(args[0]);
 
-        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[0] % 1 != 0) return message.channel.send(`Error: ${args[0]} is out of bounds`);
+        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[0] % 1 != 0) return message.channel.send(`Error: ${args[0]} is not a positive integer`);
         if (0 > profileData.coins - amount) return message.channel.send(`Error: You do not have ${amount} peanuts to bet!`);
 
         let bet = args[1].toLowerCase();
@@ -41,7 +34,7 @@ module.exports = {
                 console.log(err);
                 return message.channel.send(`Error: Could not complete the coin toss`);
             }
-            return message.channel.send(`Success! You bet ${bet} and the coin landed ${rng} up.\nYou just gained ${amount} peanuts, your pockets now contain ${profileData.coins} peanuts.`);
+            return message.channel.send(`Success! You bet ${bet} and the coin landed ${rng} up.\nYou just gained ${amount} peanuts, your pockets now contain ${profileData.coins.toFixed(2)} peanuts.`);
         } else {
             try {
                 profileData.coins -= amount;
@@ -52,7 +45,7 @@ module.exports = {
                 console.log(err);
                 return message.channel.send(`Error: Could not complete the coin toss`);
             }
-            return message.channel.send(`Bad luck... You bet ${bet} and the coin landed ${rng} up.\nYou just lost ${amount} peanuts, your pockets now contain ${profileData.coins} peanuts.`);
+            return message.channel.send(`Bad luck... You bet ${bet} and the coin landed ${rng} up.\nYou just lost ${amount} peanuts, your pockets now contain ${profileData.coins.toFixed(2)} peanuts.`);
         }
     }
 }

@@ -17,21 +17,21 @@ module.exports = {
             }
             amount = profileData.coins;
         } else if (Number(args[0])) {
-            amount = parseInt(args[0]);
+            amount = Math.round(args[0] * 1e2) / 1e2;
         } 
 
-        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || amount % 1 != 0) {
+        if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
         if (0 > profileData.coins - amount) {
-            return message.channel.send(`Error: You do not have enough to deposit ${amount} peanuts into your stash`);
+            return message.channel.send(`Error: You do not have enough to deposit ${amount.toFixed(2)} peanuts into your stash`);
         }
 
         profileData.bank += amount;
         profileData.coins -= amount;
         profileData.save();
 
-        return message.channel.send(`Successfully deposited ${amount} peanuts into your peanut reserves.\nCurrent pocket pile: ${profileData.coins} peanuts\nCurrent bank: ${profileData.bank} peanuts`);
+        return message.channel.send(`Successfully deposited ${amount.toFixed(2)} peanuts into your peanut reserves.\nCurrent pocket pile: ${profileData.coins.toFixed(2)} peanuts\nCurrent bank: ${profileData.bank.toFixed(2)} peanuts`);
     }
 }
