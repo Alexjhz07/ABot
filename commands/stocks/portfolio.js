@@ -1,3 +1,7 @@
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+const fetch = require("cross-fetch");
+
 module.exports = {
     name: 'portfolio',
     aliases: ['p'],
@@ -7,9 +11,23 @@ module.exports = {
     async execute(client, message, args, Discord, profileData) {
         if (profileData.stocks.owned.length > 0) {
             var msg = `**Portfolio of ${message.author.username}**\n`
+            let currentPrice;
 
             for (const e of profileData.stocks.owned) {
-                msg += `\n${e.symbol}\nShares: ${e.shares}\nRecent Buy Price: ${e.buyPrice.toFixed(2)}\nTotal Invested: ${e.invested.toFixed(2)}\nTotal Returned: ${e.returned.toFixed(2)}\n`;
+
+                try {
+                    const response = await fetch(`https://ca.finance.yahoo.com/quote/${e.symbol}`);
+                    const text = await response.text();
+                    const dom = new JSDOM(text);
+                    const parent = dom.window.document.querySelector("#quote-header-info");
+                    const child = parent.querySelector('fin-streamer[data-field="regularMarketPrice"]');
+                    currentPrice = parseFloat(child.textContent.replace(/,/g, '')).toFixed(2);
+                } catch (e) {
+                    console.log(e);
+                    currentPrice = "Error";
+                }
+
+                msg += `\n${e.symbol}\nShares: ${e.shares}\nCurrent Price: ${currentPrice}\nRecent Buy Price: ${e.buyPrice.toFixed(2)}\nTotal Invested: ${e.invested.toFixed(2)}\nTotal Returned: ${e.returned.toFixed(2)}\n`;
             }
             
             if (msg.length >= 2000) {
