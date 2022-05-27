@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['invest', 'sell', 'liquidate'],
     permissions: [],
     cooldown: 1,
-    description: "Invest your peanuts!",
+    description: "Invest your peanuts! Arguments { stock_symbol, shares_amount }",
     async execute(client, message, args, Discord, profileData) {
         const [head, ...rest] = args;
         let msg = message.content.substring(1, 4);
