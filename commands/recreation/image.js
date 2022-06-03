@@ -14,15 +14,18 @@ module.exports = {
     cooldown: 10,
     description: "Scrapes an image from Google",
     async execute(client, message, args, Discord, profileData) {
+        // Checks for owner permission
         if (message.author.id != process.env.OWNER) return message.channel.send("Error: This command requires owner status");
 
         const imageQuery = args.join(' ');
         if (!imageQuery) return message.channel.send('Error: Argument cannot be empty.');
 
+        // Tracks the time we first requested for the query, later used to notify us how long the command took to execute
         const timeStart = Date.now();
 
         message.channel.send(`Searching for ${imageQuery}`);
 
+        // Async scraper for google images, fed with our query
         await google.scrape(imageQuery, process.env.IMGDEPTH).then((imageResults) => {
             const timeEnd = Date.now();
             message.channel.send(`Successfully searched for "${imageQuery}".\n${process.env.IMGDEPTH} images searched.\nTime taken: ${((timeEnd - timeStart)/1000).toFixed(1)} seconds.`);

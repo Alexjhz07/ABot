@@ -14,7 +14,7 @@ module.exports = {
         let requestSymbol =  args[0].toUpperCase();
         let currentPrice;
 
-        try {
+        try { // Scrape Yahoo Finance with the given symbol
             const response = await fetch(`https://ca.finance.yahoo.com/quote/${requestSymbol}`);
             const text = await response.text();
             const dom = new JSDOM(text);
@@ -26,11 +26,13 @@ module.exports = {
             return message.channel.send(`Error while searching for stock ${requestSymbol}`);
         }
 
+        // Check if price exists
         if (currentPrice == "" || isNaN(currentPrice)) return message.channel.send(`Error while searching for stock ${requestSymbol}`);
 
         let userShares = 0;
         let userPrice = "No data";
 
+        // Fetch database info for user
         profileData.stocks.owned.some(e => {
             if (e.symbol == requestSymbol) {
                 userShares = e.shares;

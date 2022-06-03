@@ -9,22 +9,25 @@ module.exports = {
 
         let amount = parseInt(args[0]);
 
+        // Bet range check
         if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0 || args[0] % 1 != 0) return message.channel.send(`Error: ${args[0]} is not a positive integer`);
         if (0 > profileData.coins - amount) return message.channel.send(`Error: You do not have ${amount} peanuts to bet!`);
 
         let bet = args[1].toLowerCase();
 
+        // Check for valid bet result
         if (!["heads", "h", "tails", "t"].includes(bet)) return message.channel.send(`Error: ${args[1]} is not a valid bet.\nValid bets are: "Heads", "Tails", "H", and "T".`);
 
         let rng = Math.floor(Math.random() * 4); //[0, 3]
 
+        // Result
         if (rng % 2 == 1) {
             rng = "heads";
         } else {
             rng = "tails";
         }
 
-        if (rng.charAt(0) == bet.charAt(0)) {
+        if (rng.charAt(0) == bet.charAt(0)) { // Win
             try {
                 profileData.coins += amount;
                 profileData.stats.flipsWon++;
@@ -35,7 +38,7 @@ module.exports = {
                 return message.channel.send(`Error: Could not complete the coin toss`);
             }
             return message.channel.send(`Success! You bet ${bet} and the coin landed ${rng} up.\nYou just gained ${amount} peanuts, your pockets now contain ${profileData.coins.toFixed(2)} peanuts.`);
-        } else {
+        } else { // Loss
             try {
                 profileData.coins -= amount;
                 profileData.stats.flipsLost++;

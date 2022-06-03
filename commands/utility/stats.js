@@ -7,7 +7,7 @@ module.exports = {
     cooldown: 5,
     description: 'Fetch the database information of a list of users',
     async execute(client, message, args, Discord, profileData) {
-        if (!args.length) {
+        if (!args.length) { // User requesting own stats
             return message.channel.send(`**===== Stats for ${message.author.username} [Level ${Math.floor(profileData.stats.exp / process.env.XPPERLEVEL)}] =====**\n
             Experience: ${profileData.stats.exp}
             Peanuts requested: ${profileData.stats.stonksUsed} times
@@ -24,7 +24,7 @@ module.exports = {
 
         let msg = '';
 
-        for (const arg of args) {
+        for (const arg of args) { // User requesting server member stats, iterates through each argument
             const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
 
             if (userID == '') {
@@ -61,6 +61,10 @@ module.exports = {
             }
         }
 
+        if (msg.length >= 2000) { // Safeguard against long messages
+            return message.channel.send('Message is too long, please tell Alex to fix this')
+        }
+        
         message.channel.send(msg);
     }
 }

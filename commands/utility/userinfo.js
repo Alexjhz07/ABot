@@ -9,7 +9,7 @@ module.exports = {
 
         let msg = '';
 
-        for (const arg of args) {
+        for (const arg of args) { // Gives user info for each user in the arguments
             let userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
 
             if (userID == '') {
@@ -26,6 +26,10 @@ module.exports = {
             }
         }
 
+        if (msg.length >= 2000) { // Safeguard against long messages
+            return message.channel.send('Message is too long, please tell Alex to fix this')
+        }
+        
         message.channel.send(msg);
     }
 }

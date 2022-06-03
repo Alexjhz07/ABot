@@ -11,6 +11,7 @@ module.exports = {
 
         let amount;
 
+        // Sets amount to full balance if arg is all
         if (args[0].toUpperCase() == "ALL") {
             if (profileData.coins == 0) {
                 return message.channel.send('Error: You have no money to deposit');
@@ -20,10 +21,12 @@ module.exports = {
             amount = Math.round(args[0] * 1e2) / 1e2;
         } 
 
+        // Amount range check
         if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
+        // Account sufficient balance for deposit check
         if (0 > profileData.coins - amount) {
             return message.channel.send(`Error: You do not have enough to deposit ${amount.toFixed(2)} peanuts into your stash`);
         }

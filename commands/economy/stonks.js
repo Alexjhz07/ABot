@@ -8,6 +8,7 @@ module.exports = {
         const randomNumber = Math.floor(Math.random() * 50) + 1; //[1, 50]
         const jackPot = Math.floor(Math.random() * 100) + 1; //[1, 100]
 
+        // Jackpot governed by independent jackPot number
         if (jackPot == 42) {
             profileData.coins += 300;
             profileData.stats.stonksUsed++;

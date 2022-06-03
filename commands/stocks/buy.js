@@ -22,7 +22,7 @@ module.exports = {
         let requestSymbol = args[0].toUpperCase();
         let currentPrice;
 
-        try {
+        try { // Scrape Yahoo Finance with the given symbol
             const response = await fetch(`https://ca.finance.yahoo.com/quote/${requestSymbol}`);
             const text = await response.text();
             const dom = new JSDOM(text);
@@ -34,29 +34,30 @@ module.exports = {
             return message.channel.send(`Error while searching for stock ${requestSymbol}`);
         }
 
+        // No current price
         if (currentPrice == "" || isNaN(currentPrice)) return message.channel.send(`Error while searching for stock ${requestSymbol}`);
-
+        // Price is 0
         if (currentPrice <= 0) return message.channel.send(`${requestSymbol} is currently worth 0 (Rounded), please try again later.`);
         
         const price = Math.round(currentPrice * requestShares * 1e2) / 1e2;
 
-        let stockProfile = {
+        let stockProfile = { // Create dummy stock profile to match schema
             symbol: requestSymbol
         };
 
-        if (!profileData.stocks.owned.some(e => {
+        if (!profileData.stocks.owned.some(e => { // Check if user already has the stock profile
             if (e.symbol === requestSymbol) {
                 stockProfile = e;
                 return true;
             }
-        })) {
+        })) { // Push dummy stock profile to database if it does not exist
             profileData.stocks.owned.push(stockProfile);
             profileData.stocks.owned.some(e => {
                 stockProfile = e;
             })
         }
 
-        if (msg.includes('buy') || msg.includes('inv')) {
+        if (msg.includes('buy') || msg.includes('inv')) { // Puchase stock command
             if (profileData.coins < price) {
                 message.channel.send(`Error, you do not have enough to purchase ${requestSymbol} shares.\nCurrent cost for ${requestShares} shares at ${currentPrice} each: ${price.toFixed(2)}`);
             } else {
@@ -66,7 +67,7 @@ module.exports = {
                 stockProfile.invested += price;
                 message.channel.send(`Successfully purchased ${requestShares} ${requestSymbol} shares for ${price.toFixed(2)} peanuts! (${currentPrice.toFixed(2)} per share)`);
             }
-        } else if (msg.includes('sel') || msg.includes('liq')) {
+        } else if (msg.includes('sel') || msg.includes('liq')) { // Sell stock command
             if (stockProfile.shares - requestShares < 0) {
                 message.channel.send(`Error, you requested to sell ${requestShares} ${requestSymbol} shares but currently possess ${stockProfile.shares}`)
             } else {
@@ -76,6 +77,7 @@ module.exports = {
                 message.channel.send(`Successfully sold ${requestShares} ${requestSymbol} shares for ${price.toFixed(2)} peanuts! (${currentPrice.toFixed(2)} per share)`);
             }
         }
+
         profileData.save();
     }
 }

@@ -11,19 +11,20 @@ module.exports = {
     async execute(client, message, args, Discord, profileData) {
         if (args.length > 1) return message.channel.send('Error, portfolio only accepts 0 or 1 arguments.\nUse "full" as the argument to include the current prices. (Will take longer to return)');
         
-        let full = false; 
-        if (args[0]) {
+        let full = false;
+
+        if (args[0]) { // Check if user requested current price
             full = args[0].toUpperCase() == "FULL" ? true : false;
         }        
 
-        if (profileData.stocks.owned.length > 0) {
+        if (profileData.stocks.owned.length > 0) { // Check for a portfolio
             var msg = `**Portfolio of ${message.author.username}**\n`
             let currentPrice;
 
-            for (const e of profileData.stocks.owned) {
+            for (const e of profileData.stocks.owned) { // Loops through each stock owned or previously owned by user
                 msg += `\n${e.symbol}\nShares: ${e.shares}\n`
                 if (full) {
-                    try {
+                    try { // Scrape Yahoo Finance with the given symbol
                         const response = await fetch(`https://ca.finance.yahoo.com/quote/${e.symbol}`);
                         const text = await response.text();
                         const dom = new JSDOM(text);
@@ -40,13 +41,13 @@ module.exports = {
                 msg += `Recent Buy Price: ${e.buyPrice.toFixed(2)}\nTotal Invested: ${e.invested.toFixed(2)}\nTotal Returned: ${e.returned.toFixed(2)}\n`;
             }
             
-            if (msg.length >= 2000) {
+            if (msg.length >= 2000) { // Safeguard against long messages
                 return message.channel.send('Your portfolio is huge! Please tell Alex to stop being lazy and find a way to display your portfolio');
             } else {
                 message.channel.send('Your portfolio has been sent to your direct messages');
                 return client.users.cache.get(message.author.id).send(msg);
             }
-        } else {
+        } else { // No portfolio
             return message.channel.send(`Empty portfolio`);
         }
     }

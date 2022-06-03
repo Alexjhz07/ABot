@@ -9,20 +9,22 @@ module.exports = {
 
         let amount;
 
-        if (args[0].toUpperCase() == "ALL") {
+        // Sets amount to full balance if arg is all
+        if (args[0].toUpperCase() == "ALL") { 
             if (profileData.bank == 0) {
                 return message.channel.send('Error: You have no peanuts to withdraw');
             }
-            
             amount = profileData.bank;
         } else if (Number(args[0])) {
             amount = Math.round(args[0] * 1e2) / 1e2;
         }
 
+        // Amount range check
         if (amount >= Number.MAX_SAFE_INTEGER || amount <= 0) {
             return message.channel.send(`Error: ${args[0]} is out of bounds`);
         }
 
+        // Account sufficient balance for withdraw check
         if (0 > profileData.bank - amount) {
             return message.channel.send(`Error: You do not have enough in the bank to withdraw ${amount.toFixed(2)} peanuts`);
         }

@@ -2,13 +2,13 @@ const fs = require('fs');
 
 let msg = '**=== COMMANDS LIST ===**\n\n';
 
-const loadDir = (dirs) => {
+const loadDir = (dirs) => { // Load function for a directory
     const commandFiles = fs.readdirSync(`./commands/${dirs}`).filter(file => file.endsWith('.js'));
 
     msg += `***${dirs.toUpperCase()}***\n\n`;
 
-    for (const file of commandFiles) {
-        if (file == 'help.js') continue;
+    for (const file of commandFiles) { // Loads each file in a directory
+        if (file == 'help.js') continue; // Skips help.js to avoid circular dependency
 
         const command = require(`../../commands/${dirs}/${file}`);
         msg += `Command Name: ${command.name}\n`;
@@ -30,7 +30,7 @@ module.exports = {
     execute(client, message, args, Discord, profileData) {
         message.channel.send('Commands have been sent to your direct messages.');
 
-        if (msg.length >= 2000) {
+        if (msg.length >= 2000) { // Safeguard against long messages
             return message.channel.send('Message is too long, please tell Alex to fix this')
         }
 

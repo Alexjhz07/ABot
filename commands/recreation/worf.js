@@ -9,6 +9,7 @@ const response = openai.listEngines().then(e => {
     console.log('Successfully connected to OpenAI API');
 })
 
+// Helper function that parses message into predetermined coversation format to help GPT-3 know how to respond
 function generatePrompt(humanMsg) {
     return `The following is a conversation with an dog AI assistant named Bond. The assistant is helpful, creative, clever, cute, and very friendly.
     Human: Hello, who are you?
@@ -26,11 +27,13 @@ module.exports = {
     cooldown: 10,
     description: "Forward your question to an intelligent system!",
     async execute(client, message, args, Discord, profileData) {
+        // Check for whitelist access
         if (!profileData.permissions.worfAccess) return message.channel.send('Error: Whitelist access required for this command');
         if (!args.length) return message.channel.send(`Input cannot be empty!`);
         
         const userMessage = args.join(' ');
 
+        // Max characters check
         if (userMessage.length >= 250) return message.channel.send(`Error, input must be under 250 characters`);
 
         // CURRENTLY NOT WORKING
@@ -56,12 +59,14 @@ module.exports = {
         // message.channel.send('Done');
 
         // Switch to text-curie-001 when running low on funds, 10x cheaper, maybe worse performace
+        // Fetches a completion from GPT-3 with the given user input
         const completion = await openai.createCompletion("text-davinci-002", {
-            prompt: generatePrompt(userMessage),
+            prompt: generatePrompt(userMessage), // User input fed into helper function
             temperature: 0.8,
             max_tokens: 250
         });
 
+        // Collects the completion answer from json
         const result = completion.data.choices[0].text;
         message.channel.send(result);
 

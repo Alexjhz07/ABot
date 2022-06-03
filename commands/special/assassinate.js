@@ -7,28 +7,35 @@ module.exports = {
     cooldown: 300,
     description: "Interactive command with mysterious properties...",
     async execute(client, message, args, Discord, profileData) {
+        // Test for authorization
         if (message.author.id != process.env.YOR) return message.channel.send(`||Heh||`);
-        if (args.length != 1)return message.channel.send(`||Invalid target specified!||`);
+        if (args.length != 1) return message.channel.send(`||Invalid target specified!||`);
 
+        // Convert argument format from discord ping to user id
         const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
         const receiver = message.guild.members.cache.get(userID);
 
+        // Check if receiver exists and if receiver is user
         if (!receiver) return message.channel.send(`||You tried looking for a target but found none...||`);
         if (message.author == receiver.user) return message.channel.send(`||...That would be dangerous||`);
         
+        // Find receiver profile
         const receiverAcc = await profileModel.findOne(
             {
                 userID: receiver.id
             }
         )
 
+        // No profile located
         if (!receiverAcc) return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
         
+        // Random number generator for results
         let rng = Math.floor(Math.random() * 6); //[0, 5]
         let amount = Math.floor(Math.random() * 14) + 2; //[2, 15]
 
         let msg = '';
 
+        // Helper function to update user and receiver stats
         async function updateStates(uGet, rGet, pSucceed) {
             try {
                 profileData.coins += uGet;
@@ -47,6 +54,7 @@ module.exports = {
             }
         }
 
+        // All possible outcomes, governed by rng 
         switch(rng) {
             case 0:
                 updateStates(amount, -amount, true);

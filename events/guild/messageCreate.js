@@ -1,3 +1,8 @@
+/**
+ * Guild Event - Message Create
+ * Broadcasted whenever a message is created in the guild
+ */
+
 const profileModel = require('../../models/profileSchema');
 require('dotenv').config();
 
@@ -38,11 +43,13 @@ const validPermissions = [
 ]
 
 module.exports = async (client, Discord, message) => {
+    // Will ignore messages sent by all bots including self
     if (message.author.bot) return;
 
     let profileData;
     const currentTime = Date.now();
 
+    // Try to find a profile for sender, creates one if it is not found
     try {
         profileData = await profileModel.findOne({ userID: message.author.id })
 
@@ -57,6 +64,7 @@ module.exports = async (client, Discord, message) => {
         console.log(err);
     }
 
+    // Checks if user qualifies for experience points
     if (currentTime >= profileData.stats.expNext || !profileData.stats.expNext) {
         xp = Math.floor(Math.random() * 50) + 1; //[1, 50]
         profileData.stats.exp += xp;
@@ -65,15 +73,20 @@ module.exports = async (client, Discord, message) => {
         await profileData.save()
     }
 
+    // Checks for prefix
     if (!message.content.startsWith(process.env.PREFIX)) return;
+    // Checks that message was sent in a dedicated channel
     if (message.guild.id == 582029063179206684 && message.channel.id != 935771696718282842) return;
 
+    // Split message into arguments and command
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/);
     const cmd = args.shift().toLowerCase();
     const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); 
 
+    // No such command
     if (!command) return message.channel.send(`Error: "${cmd}" is not a valid command`);
 
+    // Permission check
     if (command.permissions.length && message.author.id != process.env.OWNER) {
         let invalidPerms = [];
         for (const perm of command.permissions) {
@@ -91,11 +104,13 @@ module.exports = async (client, Discord, message) => {
         }
     }
 
+    // Creates a cooldown for user if none exists
     if (!cooldowns.has(command.name)) cooldowns.set(command.name, new Discord.Collection());
 
     const timeStamps = cooldowns.get(command.name);
     const cooldown = (command.cooldown) * 1000;
 
+    // Check for an existing cooldown that is still ongoing
     if (timeStamps.has(message.author.id)) {
         const expirationTime = timeStamps.get(message.author.id) + cooldown;
 
@@ -117,6 +132,7 @@ module.exports = async (client, Discord, message) => {
         }
     }
 
+    // All checks passed, sets a cooldown at the time of execution and executes command
     timeStamps.set(message.author.id, currentTime);
     setTimeout(() => timeStamps.delete(message.author.id), cooldown);
     command.execute(client, message, args, Discord, profileData);

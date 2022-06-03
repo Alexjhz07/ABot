@@ -12,6 +12,8 @@ module.exports = {
         const currentTime = Date.now();
         let msg = message.content.substring(1, 6);
 
+        // Controls daily, weekly, & monthly.
+        // Checks cooldown stored in user database profile before providing peanuts
         if (msg.includes('daily')) {
             if (currentTime >= profileData.stats.dailyNext || !profileData.stats.dailyNext) {
                 profileData.coins += DAILY;

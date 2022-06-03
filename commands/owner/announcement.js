@@ -5,15 +5,17 @@ module.exports = {
     cooldown: 1,
     description: "Owner announcement to friend server",
     execute(client, message, args, Discord, profileData) {
-        const [head, ...rest] = args;
-
+        // Check for owner authorization
         if (message.author.id != process.env.OWNER) return message.channel.send("Error: This command requires owner status");
         if (!args.length) return message.channel.send("Error: Arguments cannot be empty");
 
+        const [head, ...rest] = args;
+
+        // Find guild
         let guild = client.guilds.cache.get(process.env.FSERVER);
         let channel;
 
-        if (guild) {
+        if (guild) { // Guild exists, send message to desired channel based on arguments
             if (head.toLowerCase() == 'general') {
                 channel = guild.channels.cache.get(process.env.FGCHANNEL);
             } else if (head.toLowerCase() == 'bot'){
@@ -31,7 +33,7 @@ module.exports = {
             } else {
                 console.log(`Error identifying channel`);
             }
-        } else {
+        } else { // Guild does not exist
             console.log(`Error identifying guild`);
         }
     }
