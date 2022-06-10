@@ -9,21 +9,26 @@ module.exports = {
     cooldown: 1,
     description: "Displays your portfolio. Use ';p full' to include the current prices.",
     async execute(client, message, args, Discord, profileData) {
-        if (args.length > 1) return message.channel.send('Error, portfolio only accepts 0 or 1 arguments.\nUse "full" as the argument to include the current prices. (Will take longer to return)');
+        if (args.length > 1) return message.channel.send('Error, portfolio only accepts 0 or 1 arguments.\nUse "full" as the argument to include the current prices. (Will take longer to return)\nUse "Smart" as the argument to only include stocks you have shares in.');
         
         let full = false;
+        let smart = false;
 
         if (args[0]) { // Check if user requested current price
-            full = args[0].toUpperCase() == "FULL" ? true : false;
-        }        
+            full = args[0].toUpperCase() == "FULL";
+            smart = args[0].toUpperCase() == "SMART";
+        }
 
         if (profileData.stocks.owned.length > 0) { // Check for a portfolio
             var msg = `**Portfolio of ${message.author.username}**\n`
             let currentPrice;
 
             for (const e of profileData.stocks.owned) { // Loops through each stock owned or previously owned by user
+                
+                if (smart && e.shares == 0) continue; // Smart skip
+
                 msg += `\n${e.symbol}\nShares: ${e.shares}\n`
-                if (full) {
+                if (smart || full) {
                     try { // Scrape Yahoo Finance with the given symbol
                         const response = await fetch(`https://ca.finance.yahoo.com/quote/${e.symbol}`);
                         const text = await response.text();
