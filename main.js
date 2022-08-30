@@ -1,12 +1,17 @@
 const Discord = require('discord.js');
+const GatewayIntentBits = Discord.GatewayIntentBits;
 const fs = require('fs');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 // Create discord client & initialize intents
 const client = new Discord.Client({
-    intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", 
-    "GUILD_MESSAGES", "GUILD_MESSAGE_TYPING", "GUILD_MESSAGE_REACTIONS"] 
+    intents: [
+        GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildEmojisAndStickers, 
+        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMessages, 
+        GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.MessageContent
+    ] 
 });
 
 

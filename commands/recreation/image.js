@@ -23,7 +23,11 @@ module.exports = {
         // Tracks the time we first requested for the query, later used to notify us how long the command took to execute
         const timeStart = Date.now();
 
-        message.channel.send(`Searching for ${imageQuery}`);
+        let msgId;
+
+        message.channel.send(`Searching for ${imageQuery}`).then(msg => {
+            msgId = msg.id;
+        });
 
         // Async scraper for google images, fed with our query
         await google.scrape(imageQuery, process.env.IMGDEPTH).then((imageResults) => {
@@ -34,5 +38,7 @@ module.exports = {
             console.log(err);
             message.channel.send('Error: Either this command is already in use or an error has occurred.\nPlease try again later.');
         });
+        
+        message.channel.messages.delete(msgId);
     }
 }

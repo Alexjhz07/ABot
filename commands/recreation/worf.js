@@ -1,6 +1,7 @@
 const profileModel = require('../../models/profileSchema');
 
 const openaiexport = require('openai');
+const { boolean } = require('mathjs');
 const configuration = new openaiexport.Configuration({
     apiKey: process.env.OPENAI_API_KEY
 })
@@ -60,11 +61,20 @@ module.exports = {
 
         // Switch to text-curie-001 when running low on funds, 10x cheaper, maybe worse performace
         // Fetches a completion from GPT-3 with the given user input
+
+        let balError = false;
+
         const completion = await openai.createCompletion("text-davinci-002", {
             prompt: generatePrompt(userMessage), // User input fed into helper function
             temperature: 0.8,
             max_tokens: 250
+        }).catch(e => {
+            balError = true;
         });
+
+        if (balError) {
+            return message.channel.send("Alex's credits have unfortunately expired.\nThank you for helping test this feature.\nSee you again in the future for more to come!");
+        }
 
         // Collects the completion answer from json
         const result = completion.data.choices[0].text;
