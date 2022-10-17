@@ -1,4 +1,5 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder } = require("discord.js");
+const paginationEmbed = require("../../utility/paginationEmbed");
 
 module.exports = {
     name: 'test',
@@ -7,17 +8,81 @@ module.exports = {
     cooldown: 0,
     description: "Command For Feature Testing",
     execute(client, message, args, Discord, profileData) {
+
+        if (message.author.id != process.env.OWNER) return message.channel.send('Error: This command requires owner status');
         
-        // 2022-10-06 
+        // 2022-10-06
         // Title: Embed Builder Testing
         // Objective: Understand how to format embeds in Discord.js v14
 
         const embed = new EmbedBuilder()
-            .setAuthor({ name: "Phil Swift" , iconURL: "https://i.imgur.com/AfFp7pu.png", url: "https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwi5rNa6-Mz6AhXrMDQIHSOgDwUQwqsBegQICRAB&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DdQw4w9WgXcQ&usg=AOvVaw0aHtehaphMhOCAkCydRLZU"})
+            .setColor(0x0000ff)
+            .setAuthor( { 
+                name: message.author.username,
+                iconURL: message.author.avatarURL(), 
+                url: message.author.avatarURL()
+            } )
             .setTitle("Vacuum")
-            .setDescription("Now with 40% extra power");
+            .setDescription("Now with 40% extra power")
+            .addFields(
+                { name: 'Level', value: String(profileData.stats.exp / 500) },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Wallet', value: String(profileData.coins), inline: true },
+                { name: 'Bank', value: String(profileData.bank), inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            .setTimestamp()
         
-        message.channel.send({ embeds: [embed] });
-        
+        const embed2 = new EmbedBuilder()
+            .setColor(0x0000ff)
+            .setAuthor( { 
+                name: message.author.username,
+                iconURL: message.author.avatarURL(), 
+                url: message.author.avatarURL()
+            } )
+            .setTitle("AAAAA")
+            .setDescription("Now with 40% extra power")
+            .addFields(
+                { name: 'Level', value: String(profileData.stats.exp / 500) },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Wallet', value: String(profileData.coins), inline: true },
+                { name: 'Bank', value: String(profileData.bank), inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            .setTimestamp()
+
+        const embed3 = new EmbedBuilder()
+            .setColor(0x0000ff)
+            .setAuthor( { 
+                name: message.author.username,
+                iconURL: message.author.avatarURL(), 
+                url: message.author.avatarURL()
+            } )
+            .setTitle("BBBBB")
+            .setDescription("Now with 40% extra power")
+            .addFields(
+                { name: 'Level', value: String(profileData.stats.exp / 500) },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Wallet', value: String(profileData.coins), inline: true },
+                { name: 'Bank', value: String(profileData.bank), inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Inline field title', value: 'Some value here', inline: true },
+            )
+            .setTimestamp()
+
+        let pages = [embed, embed2, embed3];
+        paginationEmbed(message, pages);
+        // message.channel.send({ embeds: [embed] });
     }
 }
