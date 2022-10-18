@@ -18,20 +18,20 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x0000ff)
             .setAuthor( { 
-                name: message.author.username,
+                name: `${message.author.username} - Level ${String(Math.floor(profileData.stats.exp / 500))}`,
                 iconURL: message.author.avatarURL(), 
                 url: message.author.avatarURL()
             } )
             .setTitle("Vacuum")
             .setDescription("Now with 40% extra power")
             .addFields(
-                { name: 'Level', value: String(profileData.stats.exp / 500) },
+                { name: 'Level', value: String(Math.floor(profileData.stats.exp / 500)) },
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Wallet', value: String(profileData.coins), inline: true },
                 { name: 'Bank', value: String(profileData.bank), inline: true },
-                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Hidden test', value: '||Some value here||', inline: true },
                 { name: '\u200B', value: '\u200B' },
-                { name: 'Inline field title', value: 'Some value here', inline: true },
+                { name: 'Code test', value: '`Some value here`', inline: true },
                 { name: 'Inline field title', value: 'Some value here', inline: true },
                 { name: 'Inline field title', value: 'Some value here', inline: true },
             )
@@ -84,5 +84,8 @@ module.exports = {
         let pages = [embed, embed2, embed3];
         paginationEmbed(message, pages);
         // message.channel.send({ embeds: [embed] });
+
+        // Getting Bond's icon url for future use
+        // message.channel.send(client.user.avatarURL())
     }
 }

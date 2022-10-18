@@ -7,9 +7,10 @@ require('dotenv').config();
 const client = new Discord.Client({
     intents: [
         GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildIntegrations, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildScheduledEvents,
         GatewayIntentBits.GuildMessageTyping, GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageReactions,
+        GatewayIntentBits.DirectMessageTyping
     ]
 });
 
