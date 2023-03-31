@@ -16,5 +16,5 @@ module.exports = (client, Discord) => {
         }
     }
 
-    ['economy', 'owner', 'recreation', 'special', 'stocks', 'utility'].forEach(e => loadDir(e));
+    ['economy', 'owner', 'recreation', 'special', 'stocks', 'testing', 'utility'].forEach(e => loadDir(e));
 }

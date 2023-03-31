@@ -7,7 +7,7 @@ module.exports = {
     aliases: ['q', 'wallstreet', 'ws'],
     permissions: [],
     cooldown: 1,
-    description: "Checks a stock. Arguments { stock_symbol }",
+    description: "Checks a stock. Argument: stock_symbol",
     async execute(client, message, args, Discord, profileData) {
         if (args.length != 1) return message.channel.send('Quote can only accept 1 stock symbol as its argument');
         

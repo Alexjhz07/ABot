@@ -7,6 +7,7 @@ let pages = [];
 const loadDir = (dirs) => { // Load function for a directory
     const commandFiles = fs.readdirSync(`./commands/${dirs}`).filter(file => file.endsWith('.js'));
 
+    // Constructs the base embed format for adding fields
     const embed = new EmbedBuilder()
         .setColor(0xffffff)
         .setAuthor( { 
@@ -22,6 +23,7 @@ const loadDir = (dirs) => { // Load function for a directory
     for (const file of commandFiles) { // Loads each file in a directory
         if (file == 'help.js') continue; // Skips help.js to avoid circular dependency
 
+        // Load command file
         const command = require(`../../commands/${dirs}/${file}`);
 
         if (++counter > 4) {
@@ -29,21 +31,24 @@ const loadDir = (dirs) => { // Load function for a directory
             embed.addFields({ name: '\u200B', value: '\u200B' },);
         }
 
+        // Create field for command
         let commandBlock = {
-            name: command.name,
+            name: `__${command.name}__`,
             value: 
             `
-            Aliases: ${command.aliases.length ? command.aliases.join(', ') : "None"}
-            Permissions: ${command.permissions.length ? command.permissions.join(', ') : "Everyone"}
-            Cooldown: ${command.cooldown} seconds
-            Description: ${command.description}
+            **Aliases:** ${command.aliases.length ? command.aliases.join(', ') : "None"}
+            **Permissions:** ${command.permissions.length ? command.permissions.join(', ') : "Everyone"}
+            **Cooldown:** ${command.cooldown} seconds
+            **Description:** ${command.description}
             `, 
             inline: true
         }
 
+        // Add fields to base embed
         embed.addFields( commandBlock )
     }
 
+    // Add each base embed to an array of embeds
     pages.push(embed);
 }
 
