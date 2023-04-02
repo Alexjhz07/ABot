@@ -30,26 +30,31 @@ module.exports = {
         });
 
         async function updateAll() {
-            await profileModel.find()
-                .then((users) => {
-                    let a = [];
+            await databaseModel.find()
+                .then((db) => {
+                    users = db[0].userids;
                     for (i  = 0; i < users.length; i++) {
-                        // let member = message.guild.members.cache.get(users[i].userID);
-                        a[i] = users[i].userID;
+                        updateUser(users[i])
                     }
-                    dataCreate(a);
                 })
                 .catch((e) => {
                     console.log(e);
                 });
         }
 
-        async function dataCreate(a) {
-            data = await databaseModel.create({
-                totalusers: a.length,
-                userids: a
-            });
-            await data.save();
+        async function updateUser(uid) {
+            const user = await profileModel.findOne({ userID: uid });
+            message.guild.members.fetch(uid)
+                .then((member) => {
+                    console.log(`Updating ${uid}`);
+                    user.discord.nickname = (member.displayName == member.user.username) ? 'Anonymous' : member.displayName;
+                    user.discord.discriminator = member.user.discriminator;
+                    user.discord.avatarURL = member.user.avatarURL() || '';
+                    user.save();
+                })
+                .catch((e) => {
+                    console.log(`User ${uid} not found`);
+                });
         }
 
         collector.on('end', (collected, reason) => {
