@@ -13,6 +13,11 @@ const profileSchema = new mongoose.Schema({
     serverID: { type: String, require: true },
     coins: { type: Number, default: 0 },
     bank: { type: Number, default: 0 },
+    discord: {
+        nickname: { type: String, require: true, default: "Anonymous" },
+        discriminator: { type: String, require: true },
+        avatarURL: { type: String, default: "" }
+    },
     stats: {
         exp: { type: Number, default: 0 },
         expNext: { type: Number, default: 0 },

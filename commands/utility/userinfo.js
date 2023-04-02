@@ -22,14 +22,19 @@ module.exports = {
             if (!member) {
                 msg += `Error: Could not find a member ${userID}\n\n`;
             } else {
-                msg += `Member found: ${member.user.tag}.\nNickname: ${(member.displayName == member.user.username) ? 'None' : member.displayName}.\nAccount Age: ${((Date.now() - member.user.createdAt) / (1000 * 60 * 60 * 24)).toFixed(2)} days old.\nJoined Server: ${member.joinedAt}.\n\n`;
+                msg += `Member found: ${member.user.tag}.\n`;
+                msg += `Discriminator: ${member.user.discriminator}.\n`;
+                msg += `Avatar URL: ${member.user.avatarURL()}.\n`;
+                msg += `Nickname: ${(member.displayName == member.user.username) ? 'None' : member.displayName}.\n`;
+                msg += `Account Age: ${((Date.now() - member.user.createdAt) / (1000 * 60 * 60 * 24)).toFixed(2)} days old.\n`;
+                msg += `Joined Server: ${member.joinedAt}.\n\n`;
             }
         }
 
         if (msg.length >= 2000) { // Safeguard against long messages
             return message.channel.send('Message is too long, please tell Alex to fix this')
         }
-        
+
         message.channel.send(msg);
     }
 }
