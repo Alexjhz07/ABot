@@ -10,7 +10,7 @@ module.exports = {
         let msg = '';
 
         for (const arg of args) { // Gives user info for each user in the arguments
-            let userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
+            let userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : arg;
 
             if (userID == '') {
                 msg += `Error: ${arg} is an invalid ID.\n\n`;
@@ -23,6 +23,7 @@ module.exports = {
                 msg += `Error: Could not find a member ${userID}\n\n`;
             } else {
                 msg += `Member found: ${member.user.tag}.\n`;
+                msg += `Username: ${member.user.username}.\n`;
                 msg += `Discriminator: ${member.user.discriminator}.\n`;
                 msg += `Avatar URL: ${member.user.avatarURL()}.\n`;
                 msg += `Nickname: ${(member.displayName == member.user.username) ? 'None' : member.displayName}.\n`;

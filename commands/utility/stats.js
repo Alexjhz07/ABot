@@ -25,7 +25,7 @@ module.exports = {
         let msg = '';
 
         for (const arg of args) { // User requesting server member stats, iterates through each argument
-            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
+            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : arg;
 
             if (userID == '') {
                 msg += `Error: ${arg} is an invalid ID.\n\n`;
@@ -64,7 +64,7 @@ module.exports = {
         if (msg.length >= 2000) { // Safeguard against long messages
             return message.channel.send('Message is too long, please tell Alex to fix this')
         }
-        
+
         message.channel.send(msg);
     }
 }

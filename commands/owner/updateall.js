@@ -47,9 +47,11 @@ module.exports = {
             message.guild.members.fetch(uid)
                 .then((member) => {
                     console.log(`Updating ${uid}`);
-                    user.discord.nickname = (member.displayName == member.user.username) ? 'Anonymous' : member.displayName;
+                    user.discord.nickname = (member.displayName == member.user.username) ? member.user.username : member.displayName;
+                    console.log(user.discord.nickname);
                     user.discord.discriminator = member.user.discriminator;
-                    user.discord.avatarURL = member.user.avatarURL() || '';
+                    user.discord.avatarURL = member.user.avatarURL() || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png';
+                    console.log(user.discord.avatarURL);
                     user.save();
                 })
                 .catch((e) => {

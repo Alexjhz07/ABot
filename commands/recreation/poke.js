@@ -10,13 +10,13 @@ module.exports = {
         if (args.length != 1) return message.channel.send(`||Poke must have one target!||`);
 
         // Convert argument format from discord ping to user id
-        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : '';
+        const userID = args[0].includes('<@!') ? args[0].replace('<@!', '').replace('>', '') : args[0].includes('<@') ? args[0].replace('<@', '').replace('>', '') : arg;
         const receiver = message.guild.members.cache.get(userID);
 
         // Check if receiver exists and if receiver is user
         if (!receiver) return message.channel.send(`||You must poke someone on the server||`);
         if (message.author == receiver.user) return message.channel.send(`||Silly peanut, you can't poke yourself!||`);
-        
+
         // Find receiver profile
         const receiverAcc = await profileModel.findOne(
             {
@@ -26,7 +26,7 @@ module.exports = {
 
         // No profile located
         if (!receiverAcc) return message.channel.send(`Error: Cannot locate database account for ${receiver.user.username}.\nNote that bots and inactive users will not have a database account.`);
-        
+
         // Random number generator for results
         let rng = Math.floor(Math.random() * 15); //[0, 14]
         let amount = Math.floor(Math.random() * 14) + 2; //[2, 15]
@@ -40,7 +40,7 @@ module.exports = {
             if(pSucceed) {
                 profileData.stats.pokeSucceed++;
             } else {
-                profileData.stats.pokeFail++;                    
+                profileData.stats.pokeFail++;
             }
 
             receiverAcc.stats.beenPoked++;
@@ -48,7 +48,7 @@ module.exports = {
             await receiverAcc.save();
         }
 
-        // All possible outcomes, governed by rng 
+        // All possible outcomes, governed by rng
         switch(rng) {
             case 0:
                 updateStates(amount, -amount, true);
@@ -114,7 +114,7 @@ module.exports = {
                 updateStates(0, 0, false);
                 msg += `||You turn to look for ${receiver.user.username}, but a gust of wind passes by and woosh! They're gone!?||`;
         }
-        
+
         message.channel.send(msg);
     }
 }

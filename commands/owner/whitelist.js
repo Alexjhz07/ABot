@@ -12,7 +12,7 @@ module.exports = {
         if (args.length != 2) return message.channel.send(`Whitelist takes 2 arguments`);
 
         // Convert argument format from discord ping to user id
-        const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : '';
+        const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : arg;
         const receiver = message.guild.members.cache.get(userID);
 
         // Check if receiver exists

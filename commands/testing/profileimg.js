@@ -19,7 +19,7 @@ module.exports = {
 
         const arg = args[0];
 
-        const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
+        const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : arg;
 
         // No user id
         if (userID == '') {

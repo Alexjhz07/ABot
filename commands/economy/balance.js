@@ -17,7 +17,7 @@ module.exports = {
         // Loops through each user in the argument
         for (const arg of args) {
             // Convert argument format from discord ping to user id
-            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : '';
+            const userID = arg.includes('<@!') ? arg.replace('<@!', '').replace('>', '') : arg.includes('<@') ? arg.replace('<@', '').replace('>', '') : arg;
 
             // No user id
             if (userID == '') {
@@ -39,7 +39,7 @@ module.exports = {
                     userID: userID
                 }
             )
-    
+
             // No account for this member
             if (!account) {
                 msg += `Error: Could not locate an account for ${member.user.username}.\n\n`;
