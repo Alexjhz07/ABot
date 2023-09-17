@@ -50,7 +50,7 @@ module.exports = {
                     user.discord.nickname = (member.displayName == member.user.username) ? member.user.username : member.displayName;
                     console.log(user.discord.nickname);
                     user.discord.discriminator = member.user.discriminator;
-                    user.discord.avatarURL = member.user.avatarURL() || 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png';
+                    user.discord.avatarURL = member.user.avatarURL() || 'https://i.ibb.co/1XzMjTj/Rock-icon.jpg';
                     console.log(user.discord.avatarURL);
                     user.save();
                 })
