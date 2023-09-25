@@ -14,8 +14,8 @@ module.exports = {
     cooldown: 10,
     description: "Scrapes an image from Google",
     async execute(client, message, args, Discord, profileData) {
-        // Checks for owner permission
-        if (message.author.id != process.env.OWNER) return message.channel.send("Error: This command requires owner status");
+        // Checks for correct channel
+        if (message.guildId == process.env.FSERVER && message.channel.id != process.env.BOTCHNL) return message.channel.send("Error: This command cannot be used outside of the bot channel");
 
         const imageQuery = args.join(' ');
         if (!imageQuery) return message.channel.send('Error: Argument cannot be empty.');
@@ -38,7 +38,7 @@ module.exports = {
             console.log(err);
             message.channel.send('Error: Either this command is already in use or an error has occurred.\nPlease try again later.');
         });
-        
+
         message.channel.messages.delete(msgId);
     }
 }
