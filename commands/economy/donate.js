@@ -12,7 +12,7 @@ module.exports = {
         }
 
         // Convert argument format from discord ping to user id
-        const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : arg;
+        const userID = args[1].includes('<@!') ? args[1].replace('<@!', '').replace('>', '') : args[1].includes('<@') ? args[1].replace('<@', '').replace('>', '') : args[1];
         const receiver = message.guild.members.cache.get(userID);
 
         // Check if receiver exists and if receiver is user
